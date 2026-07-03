@@ -1,0 +1,34 @@
+export const demoSessionCookie = "wiamarketingos_session";
+export const demoRoleCookie = "wiamarketingos_role";
+export const demoSessionValue = "local-marketing-os-session";
+export const demoSessionMaxAge = 60 * 60 * 8;
+export const demoPassword = "demo2026";
+
+export const demoUsers = [
+  {
+    email: "alejandro@globaltech.test",
+    label: "Alejandro",
+    name: "Alejandro",
+    role: "direccion",
+  },
+] as const;
+
+export type DemoRole = "direccion";
+
+export function getDemoUserByEmail(email: string) {
+  return demoUsers.find((item) => item.email === email.trim().toLowerCase());
+}
+
+export function getSafeNextPath(value: FormDataEntryValue | string | null) {
+  const path = String(value ?? "/interno/ventas");
+
+  if (!path.startsWith("/") || path.startsWith("//")) {
+    return "/interno/ventas";
+  }
+
+  if (path.startsWith("/login") || path.startsWith("/api/")) {
+    return "/interno/ventas";
+  }
+
+  return path;
+}

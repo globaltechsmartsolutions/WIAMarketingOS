@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model AgencyLead {
+  id                    String           @id @default(cuid())
+  clinicName            String
+  contactName           String
+  role                  String?
+  phone                 String
+  email                 String
+  city                  String?
+  chairs                Int?
+  currentSoftware       String?
+  mainLeak              String
+  monthlyFirstVisits    Int?
+  missedAppointments    Int?
+  openQuotes            Int?
+  averageTreatmentValue Int?
+  inactivePatients      Int?
+  estimatedLeakMin      Int?
+  estimatedLeakMax      Int?
+  message               String?
+  source                String           @default("landing")
+  campaign              String?
+  landingPage           String?
+  status                String           @default("nuevo")
+  priority              String           @default("normal")
+  privacyConsent        Boolean          @default(false)
+  marketingConsent      Boolean          @default(false)
+  ipAddress             String?
+  userAgent             String?
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+  activities            AgencyActivity[]
+
+  @@index([status, createdAt])
+  @@index([priority, createdAt])
+  @@index([email])
+  @@index([phone])
+}
+
+model AgencyActivity {
+  id        String   @id @default(cuid())
+  leadId    String
+  type      String
+  title     String
+  notes     String?
+  createdAt DateTime @default(now())
+
+  lead AgencyLead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@index([leadId, createdAt])
+  @@index([type, createdAt])
+}
