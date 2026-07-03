@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { CalendarX2, Calculator, FileClock, UsersRound } from "lucide-react";
+import type { DentalLandingCopy } from "@/lib/i18n/dental-leak-audit";
 
-function formatEuros(value: number) {
-  return new Intl.NumberFormat("en-IE", {
+function formatEuros(value: number, locale: string) {
+  return new Intl.NumberFormat(locale, {
     currency: "EUR",
     maximumFractionDigits: 0,
     style: "currency",
@@ -19,7 +20,11 @@ function clamp(value: number, max: number) {
   return Math.min(value, max);
 }
 
-export function LeakCalculator() {
+export function LeakCalculator({
+  copy,
+}: {
+  copy: DentalLandingCopy["calculator"];
+}) {
   const [missedAppointments, setMissedAppointments] = useState(8);
   const [openQuotes, setOpenQuotes] = useState(12);
   const [inactivePatients, setInactivePatients] = useState(180);
@@ -40,38 +45,38 @@ export function LeakCalculator() {
   const fields = [
     {
       icon: CalendarX2,
-      label: "Missed or unconfirmed appointments per month",
+      label: copy.fields.missedAppointments.label,
       max: 80,
       min: 0,
       onChange: setMissedAppointments,
-      suffix: "appointments",
+      suffix: copy.fields.missedAppointments.suffix,
       value: missedAppointments,
     },
     {
       icon: FileClock,
-      label: "Treatment quotes sent without follow-up",
+      label: copy.fields.openQuotes.label,
       max: 120,
       min: 0,
       onChange: setOpenQuotes,
-      suffix: "quotes",
+      suffix: copy.fields.openQuotes.suffix,
       value: openQuotes,
     },
     {
       icon: UsersRound,
-      label: "Patients overdue for recall or hygiene",
+      label: copy.fields.inactivePatients.label,
       max: 800,
       min: 0,
       onChange: setInactivePatients,
-      suffix: "patients",
+      suffix: copy.fields.inactivePatients.suffix,
       value: inactivePatients,
     },
     {
       icon: Calculator,
-      label: "Approximate average treatment value",
+      label: copy.fields.averageTreatment.label,
       max: 5000,
       min: 80,
       onChange: setAverageTreatment,
-      suffix: "EUR",
+      suffix: copy.fields.averageTreatment.suffix,
       value: averageTreatment,
     },
   ];
@@ -80,13 +85,12 @@ export function LeakCalculator() {
     <section id="calculator" className="border-y border-border bg-surface">
       <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
-          <p className="text-sm font-semibold text-primary">Directional calculator</p>
+          <p className="text-sm font-semibold text-primary">{copy.eyebrow}</p>
           <h2 className="mt-2 text-3xl font-semibold leading-tight md:text-4xl">
-            Put a number on revenue leaks before buying another tool.
+            {copy.title}
           </h2>
           <p className="mt-4 max-w-xl text-base leading-7 text-ink-soft">
-            This does not promise automatic results. It helps start a data-backed conversation
-            about appointments, quotes and patients that already exist inside the clinic.
+            {copy.body}
           </p>
           <div className="mt-7 grid gap-4">
             {fields.map((field) => {
@@ -101,7 +105,7 @@ export function LeakCalculator() {
                     <span className="min-w-0">
                       <span className="block text-sm font-semibold">{field.label}</span>
                       <span className="mt-1 block text-xs text-ink-soft">
-                        Current value: {field.value} {field.suffix}
+                        {copy.currentValueLabel}: {field.value} {field.suffix}
                       </span>
                     </span>
                   </span>
@@ -121,33 +125,38 @@ export function LeakCalculator() {
         </div>
 
         <div className="rounded-lg border border-primary bg-[#eef9f7] p-6 shadow-[0_18px_50px_rgba(15,107,122,0.12)]">
-          <p className="text-sm font-semibold text-primary">Possible monthly revenue leak</p>
+          <p className="text-sm font-semibold text-primary">{copy.possibleLeakLabel}</p>
           <p className="mt-3 text-4xl font-semibold leading-tight text-foreground md:text-5xl">
-            {formatEuros(estimate.min)} - {formatEuros(estimate.max)}
+            {formatEuros(estimate.min, copy.locale)} - {formatEuros(estimate.max, copy.locale)}
           </p>
           <p className="mt-4 text-sm leading-6 text-ink-soft">
-            Conservative estimate based on unused appointments, quotes without follow-up and
-            inactive patients. The audit reviews the real case before proposing automations.
+            {copy.possibleLeakDescription}
           </p>
           <dl className="mt-6 grid gap-3 text-sm">
             <div className="flex items-center justify-between gap-3 rounded-md bg-white px-4 py-3">
-              <dt className="font-medium text-ink-soft">Appointments</dt>
-              <dd className="font-semibold">{formatEuros(Math.round(missedAppointments * averageTreatment * 0.35))}</dd>
+              <dt className="font-medium text-ink-soft">{copy.breakdown.appointments}</dt>
+              <dd className="font-semibold">
+                {formatEuros(Math.round(missedAppointments * averageTreatment * 0.35), copy.locale)}
+              </dd>
             </div>
             <div className="flex items-center justify-between gap-3 rounded-md bg-white px-4 py-3">
-              <dt className="font-medium text-ink-soft">Quotes</dt>
-              <dd className="font-semibold">{formatEuros(Math.round(openQuotes * averageTreatment * 0.18))}</dd>
+              <dt className="font-medium text-ink-soft">{copy.breakdown.quotes}</dt>
+              <dd className="font-semibold">
+                {formatEuros(Math.round(openQuotes * averageTreatment * 0.18), copy.locale)}
+              </dd>
             </div>
             <div className="flex items-center justify-between gap-3 rounded-md bg-white px-4 py-3">
-              <dt className="font-medium text-ink-soft">Dormant patients</dt>
-              <dd className="font-semibold">{formatEuros(Math.round(Math.min(inactivePatients, 250) * 45))}</dd>
+              <dt className="font-medium text-ink-soft">{copy.breakdown.dormantPatients}</dt>
+              <dd className="font-semibold">
+                {formatEuros(Math.round(Math.min(inactivePatients, 250) * 45), copy.locale)}
+              </dd>
             </div>
           </dl>
           <a
             className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-md bg-primary px-5 font-semibold text-white hover:bg-primary-strong"
             href="#request-audit"
           >
-            Request a free audit
+            {copy.cta}
           </a>
         </div>
       </div>

@@ -2,16 +2,66 @@ import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { createAgencyAuditLead } from "@/lib/agency-leads";
 
-function getErrorMessage(error: unknown) {
+const localizedMessages = {
+  ar: {
+    consent: "الموافقة مطلوبة لإدارة طلب المراجعة.",
+    failed: "لم نتمكن من تسجيل الطلب. يرجى مراجعة البيانات.",
+    review: "يرجى مراجعة بيانات الطلب.",
+  },
+  en: {
+    consent: "Consent to manage the review request is required.",
+    failed: "We could not register the request. Review the details.",
+    review: "Review the request details.",
+  },
+  es: {
+    consent: "El consentimiento para gestionar la solicitud de revisión es obligatorio.",
+    failed: "No hemos podido registrar la solicitud. Revisa los datos.",
+    review: "Revisa los datos de la solicitud.",
+  },
+} as const;
+
+type RequestLocale = keyof typeof localizedMessages;
+
+function getLocaleFromPayload(payload: { landingPage?: unknown; locale?: unknown } | null): RequestLocale {
+  const explicitLocale = String(payload?.locale ?? "").toLowerCase();
+
+  if (explicitLocale === "ar" || explicitLocale === "en" || explicitLocale === "es") {
+    return explicitLocale;
+  }
+
+  const landingPage = String(payload?.landingPage ?? "");
+
+  if (landingPage.startsWith("/ar/")) {
+    return "ar";
+  }
+
+  if (landingPage.startsWith("/en/")) {
+    return "en";
+  }
+
+  return "es";
+}
+
+function getErrorMessage(error: unknown, locale: RequestLocale) {
+  const messages = localizedMessages[locale];
+
   if (error instanceof ZodError) {
-    return error.issues[0]?.message ?? "Review the request details.";
+    return messages.review;
   }
 
   if (error instanceof Error) {
-    return error.message;
+    if (error.message === "Consent to manage the request is required.") {
+      return messages.consent;
+    }
+
+    if (error.message === "request_failed") {
+      return messages.failed;
+    }
+
+    return locale === "en" ? error.message : messages.failed;
   }
 
-  return "We could not register the request. Review the details.";
+  return messages.failed;
 }
 
 function getRequestClientMeta(request: NextRequest) {
@@ -28,8 +78,13 @@ function getRequestClientMeta(request: NextRequest) {
   };
 }
 
-function getRedirectUrl(request: NextRequest) {
-  const url = new URL("/dental-leak-audit", request.url);
+function getRedirectUrl(request: NextRequest, landingPage: unknown) {
+  const requestedPath = String(landingPage ?? "/es/dental-leak-audit");
+  const safePath =
+    requestedPath.startsWith("/") && !requestedPath.startsWith("//")
+      ? requestedPath
+      : "/es/dental-leak-audit";
+  const url = new URL(safePath, request.url);
 
   if (url.hostname === "0.0.0.0") {
     url.hostname = "127.0.0.1";
@@ -68,7 +123,8 @@ async function getPayload(request: NextRequest) {
         message: String(body.message ?? ""),
         source: String(body.source ?? "landing"),
         campaign: String(body.campaign ?? ""),
-        landingPage: String(body.landingPage ?? "/dental-leak-audit"),
+        landingPage: String(body.landingPage ?? "/es/dental-leak-audit"),
+        locale: String(body.locale ?? ""),
         privacyConsent: body.privacyConsent === true,
         marketingConsent: body.marketingConsent === true,
       },
@@ -97,7 +153,8 @@ async function getPayload(request: NextRequest) {
       message: String(formData.get("message") ?? ""),
       source: String(formData.get("source") ?? "landing"),
       campaign: String(formData.get("campaign") ?? ""),
-      landingPage: String(formData.get("landingPage") ?? "/dental-leak-audit"),
+      landingPage: String(formData.get("landingPage") ?? "/es/dental-leak-audit"),
+      locale: String(formData.get("locale") ?? ""),
       privacyConsent: getBoolean(formData.get("privacyConsent")),
       marketingConsent: getBoolean(formData.get("marketingConsent")),
     },
@@ -106,12 +163,14 @@ async function getPayload(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const wantsJson = request.headers.get("content-type")?.includes("application/json") ?? false;
+  let payload: Awaited<ReturnType<typeof getPayload>>["payload"] | null = null;
 
   try {
-    const { honeypot, payload } = await getPayload(request);
+    const parsedRequest = await getPayload(request);
+    payload = parsedRequest.payload;
 
-    if (honeypot.trim()) {
-      throw new Error("We could not register the request. Review the details.");
+    if (parsedRequest.honeypot.trim()) {
+      throw new Error("request_failed");
     }
 
     const lead = await createAgencyAuditLead(payload, getRequestClientMeta(request));
@@ -120,18 +179,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: true, id: lead.id });
     }
 
-    const redirectUrl = getRedirectUrl(request);
+    const redirectUrl = getRedirectUrl(request, payload.landingPage);
     redirectUrl.searchParams.set("request", "received");
 
     return NextResponse.redirect(redirectUrl, { status: 303 });
   } catch (error) {
-    const message = getErrorMessage(error);
+    const message = getErrorMessage(error, getLocaleFromPayload(payload));
 
     if (wantsJson) {
       return NextResponse.json({ ok: false, error: message }, { status: 400 });
     }
 
-    const redirectUrl = getRedirectUrl(request);
+    const redirectUrl = getRedirectUrl(request, payload?.landingPage);
     redirectUrl.searchParams.set("error", message);
 
     return NextResponse.redirect(redirectUrl, { status: 303 });

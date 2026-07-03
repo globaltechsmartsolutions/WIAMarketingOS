@@ -289,7 +289,7 @@ export default async function CampaignsPage({
             </label>
             <label className="grid gap-1 font-semibold">
               Landing path
-              <input className="h-10 rounded-md border border-border bg-white px-3 outline-none focus:border-primary" name="landingPath" placeholder="/dental-leak-audit" />
+              <input className="h-10 rounded-md border border-border bg-white px-3 outline-none focus:border-primary" name="landingPath" placeholder="/es/dental-leak-audit" />
             </label>
             <div className="grid gap-3 sm:grid-cols-2">
               <label className="grid gap-1 font-semibold">

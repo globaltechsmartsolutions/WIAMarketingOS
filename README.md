@@ -24,14 +24,17 @@ The strategy and roadmap live in [`docs/`](./docs/README.md):
 
 ## Main Routes
 
-- `/dental-leak-audit` - public acquisition landing page for dental clinics.
+- `/es/dental-leak-audit` - Spanish public acquisition landing page for dental clinics.
+- `/en/dental-leak-audit` - English public acquisition landing page for dental clinics.
+- `/ar/dental-leak-audit` - Arabic public acquisition landing page for dental clinics, with RTL layout.
+- `/dental-leak-audit` - compatibility redirect to `/es/dental-leak-audit`.
 - `/internal/campaigns` - central campaign CRM.
 - `/internal/leads` - leads, companies, contacts, activities and tasks.
 - `/internal/deals` - opportunity pipeline.
 - `/internal/sales` - alias that redirects to `/internal/leads`.
 - `/api/agency/audits` - endpoint that receives audit requests.
 
-Legacy Spanish routes are kept as redirects or compatibility aliases, but new work should use the English routes above.
+Legacy routes are kept as redirects or compatibility aliases. New public campaign work should use localized routes and keep Spanish, English and Arabic as first-class languages.
 
 ## Local Development
 
@@ -57,7 +60,8 @@ Phase 1 of the roadmap is implemented:
 - Dental demo seed.
 - Incoming audit synchronization into the central CRM.
 - Internal campaign, lead and opportunity screens.
-- English public and internal routes.
+- Localized public dental landing page in Spanish, English and Arabic.
+- English internal routes.
 
 ## Next Milestone
 

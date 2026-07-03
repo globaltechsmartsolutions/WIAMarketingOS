@@ -551,7 +551,7 @@ export default async function LeadsPage({
               Change the filter or send a request from the dental landing page.
             </p>
             <Link
-              href="/dental-leak-audit"
+              href="/es/dental-leak-audit"
               className="mt-5 inline-flex h-10 items-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-white hover:bg-primary-strong"
             >
               Open landing page

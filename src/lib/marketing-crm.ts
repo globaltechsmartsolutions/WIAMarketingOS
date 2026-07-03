@@ -240,7 +240,7 @@ async function getDentalCampaign() {
     where: { slug: dentalCampaignSlug },
     update: {
       status: "active",
-      landingPath: "/dental-leak-audit",
+      landingPath: "/es/dental-leak-audit",
     },
     create: {
       name: "Dental Revenue Leak Audit",
@@ -249,7 +249,7 @@ async function getDentalCampaign() {
       offer: "Free revenue leak audit",
       status: "active",
       goal: "Find clinics losing appointments, quotes or inactive patients and open a WIADental pilot.",
-      landingPath: "/dental-leak-audit",
+      landingPath: "/es/dental-leak-audit",
     },
   });
 }
@@ -341,7 +341,7 @@ async function seedDemoMarketingCrm(campaignId: string) {
         status: item.status,
         priority: item.priority,
         source: "demo_seed",
-        landingPage: "/dental-leak-audit",
+        landingPage: "/es/dental-leak-audit",
         problem: item.problem,
         estimatedValueMin: item.valueCents,
         estimatedValueMax: Math.round(item.valueCents * 1.75),

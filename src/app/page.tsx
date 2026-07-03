@@ -55,9 +55,9 @@ export default function Home() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-primary px-5 font-semibold text-white hover:bg-primary-strong"
-              href="/dental-leak-audit"
+              href="/es/dental-leak-audit"
             >
-              View dental landing page
+              View dental landing page ES
               <ArrowRight size={18} aria-hidden />
             </Link>
             <Link

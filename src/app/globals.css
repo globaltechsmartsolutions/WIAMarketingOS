@@ -37,6 +37,10 @@ body {
   color: var(--foreground);
 }
 
+.font-arabic {
+  font-family: Tahoma, Arial, "Segoe UI", sans-serif;
+}
+
 button,
 a,
 input,

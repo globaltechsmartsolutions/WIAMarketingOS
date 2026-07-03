@@ -60,7 +60,7 @@ export function InternalNav({ userName }: { userName: string }) {
             <span>Commercial management</span>
           </div>
           <Link
-            href="/dental-leak-audit"
+            href="/es/dental-leak-audit"
             className="inline-flex h-10 shrink-0 items-center gap-2 rounded-md border border-border bg-background px-3 text-sm font-semibold hover:bg-muted"
           >
             Landing
