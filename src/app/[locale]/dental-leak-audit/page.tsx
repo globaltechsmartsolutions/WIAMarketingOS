@@ -48,7 +48,7 @@ const systemIcons = {
 const inputClass =
   "h-11 rounded-md border border-border bg-white px-3 text-sm outline-none focus:border-primary";
 const textareaClass =
-  "min-h-28 rounded-md border border-border bg-white px-3 py-3 text-sm outline-none focus:border-primary";
+  "min-h-20 rounded-md border border-border bg-white px-3 py-3 text-sm outline-none focus:border-primary";
 
 function localizedPath(locale: DentalLandingLocale) {
   return `/${locale}/dental-leak-audit`;
@@ -202,12 +202,6 @@ export default async function LocalizedDentalLeakAuditLanding({
                   {copy.hero.primaryCta}
                   <ArrowRight className={isRtl ? "rotate-180" : undefined} size={18} aria-hidden />
                 </a>
-                <a
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-white/42 px-5 font-semibold text-white hover:bg-white/10"
-                  href="#automations"
-                >
-                  {copy.hero.secondaryCta}
-                </a>
               </div>
               <div className="mt-9 grid gap-4 text-sm text-white/78 sm:grid-cols-3">
                 {copy.hero.trust.map((item, index) => (
@@ -223,35 +217,6 @@ export default async function LocalizedDentalLeakAuditLanding({
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-5 py-12">
-        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-          <div>
-            <p className="text-sm font-semibold text-primary">{copy.problem.eyebrow}</p>
-            <h2 className="mt-2 text-3xl font-semibold leading-tight md:text-4xl">
-              {copy.problem.title}
-            </h2>
-          </div>
-          <p className="text-base leading-7 text-ink-soft">{copy.problem.body}</p>
-        </div>
-
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
-          {copy.leaks.map((item) => {
-            const visual = leakVisuals[item.key];
-            const Icon = visual.icon;
-
-            return (
-              <article key={item.label} className="rounded-lg border border-border bg-surface p-5">
-                <span className={`grid size-11 place-items-center rounded-md ${visual.tone}`}>
-                  <Icon size={20} aria-hidden />
-                </span>
-                <h3 className="mt-5 text-lg font-semibold">{item.label}</h3>
-                <p className="mt-3 text-sm leading-6 text-ink-soft">{item.text}</p>
-              </article>
-            );
-          })}
         </div>
       </section>
 
@@ -326,27 +291,6 @@ export default async function LocalizedDentalLeakAuditLanding({
         </div>
       </section>
 
-      <section className="border-y border-border bg-surface">
-        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 lg:grid-cols-[1fr_1fr]">
-          <div>
-            <p className="text-sm font-semibold text-primary">{copy.audit.eyebrow}</p>
-            <h2 className="mt-2 text-3xl font-semibold leading-tight md:text-4xl">
-              {copy.audit.title}
-            </h2>
-          </div>
-          <div className="grid gap-4">
-            {copy.audit.steps.map((step, index) => (
-              <div key={step} className="flex gap-4 rounded-lg border border-border bg-background p-5">
-                <span className="grid size-9 shrink-0 place-items-center rounded-md bg-primary font-mono text-sm font-semibold text-white">
-                  {index + 1}
-                </span>
-                <p className="text-base leading-7">{step}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section id="request-audit" className="mx-auto grid max-w-6xl gap-8 px-5 py-12 lg:grid-cols-[0.78fr_1.22fr]">
         <aside className="lg:sticky lg:top-6 lg:self-start">
           <p className="text-sm font-semibold text-primary">{copy.formIntro.eyebrow}</p>
@@ -403,17 +347,8 @@ export default async function LocalizedDentalLeakAuditLanding({
             <FieldLabel label={copy.form.clinicName}>
               <input className={inputClass} name="clinicName" placeholder={copy.form.clinicNamePlaceholder} required />
             </FieldLabel>
-            <FieldLabel label={copy.form.city}>
-              <input className={inputClass} name="city" placeholder={copy.form.cityPlaceholder} />
-            </FieldLabel>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2">
             <FieldLabel label={copy.form.contactName}>
               <input autoComplete="name" className={inputClass} name="contactName" placeholder={copy.form.contactNamePlaceholder} required />
-            </FieldLabel>
-            <FieldLabel label={copy.form.role}>
-              <input className={inputClass} name="role" placeholder={copy.form.rolePlaceholder} />
             </FieldLabel>
           </div>
 
@@ -426,44 +361,15 @@ export default async function LocalizedDentalLeakAuditLanding({
             </FieldLabel>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-3">
-            <FieldLabel label={copy.form.chairs}>
-              <input className={inputClass} min="1" name="chairs" placeholder={copy.form.chairsPlaceholder} type="number" />
-            </FieldLabel>
-            <FieldLabel label={copy.form.currentSoftware}>
-              <input className={inputClass} name="currentSoftware" placeholder={copy.form.currentSoftwarePlaceholder} />
-            </FieldLabel>
-            <FieldLabel label={copy.form.mainLeak}>
-              <select className={inputClass} defaultValue="no_lo_se" name="mainLeak">
-                {copy.form.mainLeakOptions.map(([value, label]) => (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ))}
-              </select>
-            </FieldLabel>
-          </div>
-
-          <div className="border-y border-border py-4">
-            <h3 className="font-semibold">{copy.form.numbersTitle}</h3>
-            <div className="mt-4 grid gap-4 md:grid-cols-5">
-              <FieldLabel label={copy.form.monthlyFirstVisits}>
-                <input className={inputClass} min="0" name="monthlyFirstVisits" placeholder={copy.form.monthlyFirstVisitsPlaceholder} type="number" />
-              </FieldLabel>
-              <FieldLabel label={copy.form.missedAppointments}>
-                <input className={inputClass} min="0" name="missedAppointments" placeholder={copy.form.missedAppointmentsPlaceholder} type="number" />
-              </FieldLabel>
-              <FieldLabel label={copy.form.openQuotes}>
-                <input className={inputClass} min="0" name="openQuotes" placeholder={copy.form.openQuotesPlaceholder} type="number" />
-              </FieldLabel>
-              <FieldLabel label={copy.form.averageTreatmentValue}>
-                <input className={inputClass} min="0" name="averageTreatmentValue" placeholder={copy.form.averageTreatmentValuePlaceholder} type="number" />
-              </FieldLabel>
-              <FieldLabel label={copy.form.inactivePatients}>
-                <input className={inputClass} min="0" name="inactivePatients" placeholder={copy.form.inactivePatientsPlaceholder} type="number" />
-              </FieldLabel>
-            </div>
-          </div>
+          <FieldLabel label={copy.form.mainLeak}>
+            <select className={inputClass} defaultValue="no_lo_se" name="mainLeak">
+              {copy.form.mainLeakOptions.map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </FieldLabel>
 
           <FieldLabel label={copy.form.message}>
             <textarea className={textareaClass} name="message" placeholder={copy.form.messagePlaceholder} />
@@ -473,10 +379,6 @@ export default async function LocalizedDentalLeakAuditLanding({
             <label className="flex gap-3">
               <input className="mt-1 size-4 accent-primary" name="privacyConsent" required type="checkbox" />
               <span>{copy.form.privacyConsent}</span>
-            </label>
-            <label className="flex gap-3">
-              <input className="mt-1 size-4 accent-primary" name="marketingConsent" type="checkbox" />
-              <span>{copy.form.marketingConsent}</span>
             </label>
           </div>
 

@@ -24,7 +24,6 @@ export type DentalLandingCopy = {
     title: string;
     body: string;
     primaryCta: string;
-    secondaryCta: string;
     trust: string[];
   };
   problem: {
@@ -122,28 +121,28 @@ export const dentalLandingLocaleOptions: Array<{
 
 const mainLeakOptions: Record<DentalLandingLocale, Array<[string, string]>> = {
   es: [
-    ["agenda", "Automatizar confirmación de citas"],
-    ["presupuestos", "Automatizar seguimiento de tratamientos"],
-    ["pacientes_inactivos", "Reactivar pacientes automáticamente"],
-    ["recepcion", "Quitar tareas repetitivas a recepción"],
-    ["resenas", "Automatizar petición de reseñas"],
-    ["no_lo_se", "Quiero que me digáis qué automatizar"],
+    ["agenda", "Confirmaciones y cambios de cita"],
+    ["presupuestos", "Seguimiento de tratamientos pendientes"],
+    ["pacientes_inactivos", "Volver a contactar con pacientes inactivos"],
+    ["recepcion", "Tareas repetitivas de recepción"],
+    ["resenas", "Pedir reseñas sin hacerlo a mano"],
+    ["no_lo_se", "No lo tengo claro, quiero que lo miréis"],
   ],
   en: [
-    ["agenda", "Automate appointment confirmation"],
-    ["presupuestos", "Automate treatment follow-up"],
-    ["pacientes_inactivos", "Reactivate patients automatically"],
-    ["recepcion", "Remove repetitive front desk tasks"],
-    ["resenas", "Automate review requests"],
-    ["no_lo_se", "Tell me what to automate"],
+    ["agenda", "Appointment confirmations and changes"],
+    ["presupuestos", "Follow-up for pending treatments"],
+    ["pacientes_inactivos", "Reconnect with inactive patients"],
+    ["recepcion", "Repetitive front desk tasks"],
+    ["resenas", "Ask for reviews without doing it manually"],
+    ["no_lo_se", "I am not sure, review it with me"],
   ],
   ar: [
-    ["agenda", "أتمتة تأكيد المواعيد"],
-    ["presupuestos", "أتمتة متابعة خطط العلاج"],
-    ["pacientes_inactivos", "إعادة تفعيل المرضى تلقائياً"],
-    ["recepcion", "إزالة المهام المتكررة عن الاستقبال"],
-    ["resenas", "أتمتة طلب التقييمات"],
-    ["no_lo_se", "أخبروني بما يجب أتمتته"],
+    ["agenda", "تأكيدات وتغييرات المواعيد"],
+    ["presupuestos", "متابعة العلاجات المعلقة"],
+    ["pacientes_inactivos", "التواصل مع المرضى غير النشطين"],
+    ["recepcion", "تخفيف المهام المتكررة عن الاستقبال"],
+    ["resenas", "طلب التقييمات دون متابعة يدوية"],
+    ["no_lo_se", "لست متأكداً، أريد أن تراجعوه معي"],
   ],
 };
 
@@ -158,9 +157,9 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
     direction: "ltr",
     nav: {
       automations: "Automatizaciones",
-      system: "Sistema",
-      audit: "Revisión",
-      cta: "Automatizar mi clínica",
+      system: "Cómo funciona",
+      audit: "Auditoría",
+      cta: "Quiero una auditoría",
     },
     brand: {
       label: "WIADental",
@@ -168,11 +167,10 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
     },
     hero: {
       eyebrow: "Automatizaciones de IA para clínicas dentales",
-      title: "Automatizamos el seguimiento que tu clínica no puede perseguir a mano.",
+      title: "Que nada importante se quede en el aire.",
       body:
-        "Citas que necesitan confirmación, tratamientos que esperan respuesta, pacientes inactivos, reseñas y tareas repetitivas de recepción. Creamos flujos de IA conectados a tu CRM para priorizar, preparar mensajes y activar el seguimiento sin tocar datos clínicos ni sonar invasivos.",
-      primaryCta: "Quiero automatizar mi seguimiento",
-      secondaryCta: "Ver qué se automatiza",
+        "Automatizamos confirmaciones, WhatsApp, tratamientos pendientes, pacientes inactivos y reseñas para que el día a día avance con orden, sin cargar más a recepción y manteniendo siempre el control humano de la clínica.",
+      primaryCta: "Quiero una auditoría",
       trust: [
         "Automatizaciones sobre tu CRM actual",
         "WhatsApp, email y tareas para recepción",
@@ -203,56 +201,56 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
       },
     ],
     automations: {
-      eyebrow: "Qué automatizamos primero",
-      title: "Automatizamos lo que más se repite y más oportunidades deja escapar.",
+      eyebrow: "Por dónde empezamos",
+      title: "Primero quitamos las tareas que más cansan al equipo.",
       body:
-        "No empezamos con “IA para todo”. Empezamos con flujos concretos que recepción entiende y dirección puede medir.",
+        "No hace falta revolucionar la clínica. Elegimos dos o tres momentos donde hoy se pierde tiempo: confirmar citas, recuperar tratamientos, reactivar pacientes o pedir reseñas.",
       items: [
         {
           key: "schedule",
           title: "Agenda",
-          text: "Confirmaciones, cambios de cita, huecos libres, recordatorios y avisos internos para que recepción sepa a quién contactar.",
+          text: "Recordatorios y avisos para que recepción no tenga que perseguir cada confirmación a mano.",
         },
         {
           key: "quotes",
           title: "Tratamientos",
-          text: "Seguimiento de planes enviados, financiación, dudas frecuentes y mensajes de reactivación cuando el paciente no responde.",
+          text: "Seguimientos educados cuando un paciente se queda pensando un presupuesto y nadie quiere parecer insistente.",
         },
         {
           key: "patients",
-          title: "Pacientes dormidos",
-          text: "Revisiones, higiene, campañas de retorno y solicitudes de reseñas con mensajes aprobados por la clínica.",
+          title: "Pacientes inactivos",
+          text: "Mensajes para volver a contactar con pacientes que llevan tiempo sin venir, sin sonar frío ni automático.",
         },
       ],
       closing:
-        "La promesa no es “automatizar cualquier cosa”. La promesa es elegir bien qué automatizar, conectarlo con tu forma de trabajar y medir si recupera oportunidades.",
-      cta: "Quiero ver mis automatizaciones",
+        "La clave no es mandar más mensajes. Es mandar el adecuado, en el momento adecuado y con el tono de la clínica.",
+      cta: "Quiero revisar mi clínica",
     },
     system: {
-      eyebrow: "Cómo lo montamos",
-      title: "Un motor de automatizaciones de IA para que recepción venda mejor sin sonar a robot.",
+      eyebrow: "Cómo trabajamos",
+      title: "Miramos tu día a día y montamos lo que tenga sentido.",
       body:
-        "El piloto de 30 días conecta flujos concretos: agenda, tratamientos propuestos, pacientes dormidos, reseñas y tareas internas. La IA prepara, prioriza y avisa; tu equipo mantiene el criterio y decide qué se envía.",
+        "No llegamos con una solución cerrada. Vemos cómo gestionáis agenda, WhatsApp, llamadas y tratamientos, y a partir de ahí montamos automatizaciones sencillas que el equipo pueda usar.",
       blocks: [
         {
           key: "frontDesk",
-          title: "Recepción con tareas automáticas",
-          text: "El equipo ve qué conversación toca atender, por qué importa y qué acción conviene hacer, sin bucear entre WhatsApp, llamadas y notas sueltas.",
+          title: "Menos cosas en la cabeza",
+          text: "En vez de depender de memoria, notas y prisas, el equipo ve qué toca hacer, con quién y por qué.",
         },
         {
           key: "followUp",
-          title: "Mensajes preparados por IA",
-          text: "Creamos textos por caso: confirmación, tratamiento, financiación, revisión pendiente o reseña. La clínica revisa antes de enviar.",
+          title: "Mensajes con vuestro tono",
+          text: "Preparamos textos que suenan a la clínica: cercanos, profesionales y sin presión. Si algo importa, se revisa antes de enviarlo.",
         },
         {
           key: "dashboard",
-          title: "Visibilidad para dirección",
-          text: "Citas recuperadas, tratamientos reactivados, pacientes contactados y oportunidades abiertas en un panel claro.",
+          title: "Lo importante a la vista",
+          text: "Dirección puede ver qué se ha recuperado: citas, tratamientos, pacientes y reseñas, sin perderse en hojas sueltas.",
         },
         {
           key: "control",
-          title: "Control humano",
-          text: "La automatización prepara el trabajo. Tu equipo conserva el criterio, el tono y la decisión final.",
+          title: "La clínica decide",
+          text: "Nosotros ordenamos el trabajo. El criterio, el trato y la relación con el paciente siguen siendo vuestros.",
         },
       ],
     },
@@ -266,14 +264,14 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
       ],
     },
     formIntro: {
-      eyebrow: "Diseñemos tu automatización",
-      title: "Cuéntanos qué quieres dejar de perseguir manualmente.",
+      eyebrow: "Lo vemos contigo",
+      title: "Déjanos tus datos y te decimos por dónde empezar.",
       body:
-        "No necesitamos nombres de pacientes ni información clínica. Solo una foto rápida de cómo gestionáis agenda, tratamientos, reseñas y tareas repetitivas.",
+        "No necesitamos historias clínicas ni una lista interminable de números. Con una llamada corta podemos detectar qué tendría más sentido automatizar primero.",
       bullets: [
-        "Te responde una persona para mapear procesos, no un bot genérico.",
-        "Sin datos clínicos, sin envíos ocultos y con control humano.",
-        "Objetivo: salir con 2-3 automatizaciones claras para probar.",
+        "Sin datos de pacientes.",
+        "Sin cambiar tu CRM de entrada.",
+        "Una primera propuesta clara, no una demo genérica.",
       ],
     },
     form: {
@@ -296,7 +294,7 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
       chairsPlaceholder: "3",
       currentSoftware: "Software actual",
       currentSoftwarePlaceholder: "Gesden, Dentidesk, Excel...",
-      mainLeak: "Qué quieres automatizar primero",
+      mainLeak: "¿Qué te gustaría quitar de encima primero?",
       mainLeakOptions: mainLeakOptions.es,
       numbersTitle: "Números aproximados para preparar bien la llamada",
       monthlyFirstVisits: "Primeras visitas/mes",
@@ -309,12 +307,12 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
       averageTreatmentValuePlaceholder: "750",
       inactivePatients: "Pacientes inactivos",
       inactivePatientsPlaceholder: "180",
-      message: "Cuéntanos qué está pasando",
+      message: "¿Algo más que debamos saber?",
       messagePlaceholder:
-        "Ejemplo: queremos automatizar confirmaciones, reactivar tratamientos pendientes, ordenar WhatsApp o recuperar revisiones sin parecer insistentes.",
-      privacyConsent: "Acepto el tratamiento de mis datos para gestionar esta solicitud de revisión.",
+        "Opcional: por ejemplo, recibimos demasiados WhatsApp, se quedan tratamientos sin cerrar o recepción va saturada.",
+      privacyConsent: "Acepto que contactéis conmigo para gestionar esta auditoría.",
       marketingConsent: "Acepto recibir comunicaciones comerciales relacionadas con automatización dental.",
-      submit: "Quiero automatizar mi seguimiento",
+      submit: "Quiero que lo reviséis",
     },
   },
   en: {
@@ -327,9 +325,9 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
     direction: "ltr",
     nav: {
       automations: "Automations",
-      system: "System",
-      audit: "Review",
-      cta: "Automate my clinic",
+      system: "How it works",
+      audit: "Audit",
+      cta: "Request an audit",
     },
     brand: {
       label: "WIADental",
@@ -337,11 +335,10 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
     },
     hero: {
       eyebrow: "AI automations for dental clinics",
-      title: "We automate the follow-up your clinic cannot chase by hand.",
+      title: "Make sure nothing important is left hanging.",
       body:
-        "Appointments that need confirmation, treatments waiting for an answer, inactive patients, reviews and repetitive front desk tasks. We build AI flows connected to your CRM to prioritize, draft messages and activate follow-up without clinical data or invasive campaigns.",
-      primaryCta: "Automate my follow-up",
-      secondaryCta: "See what we automate",
+        "We automate confirmations, WhatsApp, pending treatments, inactive patients and reviews so the day-to-day moves with order, without adding more work to the front desk and always under the clinic's human control.",
+      primaryCta: "Request an audit",
       trust: [
         "Automations on top of your current CRM",
         "WhatsApp, email and front desk tasks",
@@ -372,56 +369,56 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
       },
     ],
     automations: {
-      eyebrow: "What we automate first",
-      title: "We automate the repetitive work that creates the biggest leaks.",
+      eyebrow: "Where we start",
+      title: "First, we take the tiring work off your team's plate.",
       body:
-        "We do not start with “AI for everything”. We start with concrete flows the front desk understands and management can measure.",
+        "You do not need to change the whole clinic. We pick two or three moments where time is lost today: confirming appointments, following up on treatment plans, bringing patients back or asking for reviews.",
       items: [
         {
           key: "schedule",
           title: "Schedule",
-          text: "Confirmations, reschedules, empty slots, reminders and internal alerts so the front desk knows who to contact.",
+          text: "Reminders and alerts so the front desk does not have to chase every confirmation by hand.",
         },
         {
           key: "quotes",
           title: "Treatments",
-          text: "Follow-up for sent plans, financing, frequent questions and reactivation messages when the patient does not answer.",
+          text: "Polite follow-ups when a patient is still thinking about a treatment plan and nobody wants to sound pushy.",
         },
         {
           key: "patients",
-          title: "Dormant patients",
-          text: "Recall, hygiene, return campaigns and review requests with messages approved by the clinic.",
+          title: "Inactive patients",
+          text: "Messages to reconnect with patients who have not visited in a while, without sounding cold or automatic.",
         },
       ],
       closing:
-        "The promise is not “automate anything”. It is choosing what should be automated, connecting it to the way your clinic works and measuring whether it recovers opportunities.",
-      cta: "Show me my automations",
+        "The point is not to send more messages. It is to send the right one, at the right moment, in the clinic's own tone.",
+      cta: "Review my clinic",
     },
     system: {
-      eyebrow: "How we build it",
-      title: "An AI automation engine that helps the front desk sell better without sounding robotic.",
+      eyebrow: "How we work",
+      title: "We look at your day-to-day, then build what actually helps.",
       body:
-        "The 30-day pilot connects concrete flows: scheduling, proposed treatments, dormant patients, reviews and internal tasks. AI prepares, prioritizes and alerts; your team keeps the judgment and decides what gets sent.",
+        "We do not arrive with a boxed solution. We look at appointments, WhatsApp, calls and pending treatments, then build simple automations the team can actually use.",
       blocks: [
         {
           key: "frontDesk",
-          title: "Automated front desk tasks",
-          text: "The team sees which conversation needs attention, why it matters and what action to take, without digging through WhatsApp, calls and loose notes.",
+          title: "Fewer things to remember",
+          text: "Instead of relying on memory, notes and rush, the team sees what needs to happen, with whom and why.",
         },
         {
           key: "followUp",
-          title: "AI-prepared messages",
-          text: "We create copy by case: confirmation, treatment, financing, recall or review request. The clinic reviews before anything is sent.",
+          title: "Messages in your tone",
+          text: "We prepare messages that sound like the clinic: warm, professional and not pushy. If it matters, the team reviews it before sending.",
         },
         {
           key: "dashboard",
-          title: "Management visibility",
-          text: "Recovered appointments, reactivated treatments, contacted patients and open opportunities in one clear dashboard.",
+          title: "What matters, clearly visible",
+          text: "Management can see what came back: appointments, treatments, patients and reviews, without digging through loose sheets.",
         },
         {
           key: "control",
-          title: "Human control",
-          text: "Automation prepares the work. Your team keeps the judgment, the tone and the final decision.",
+          title: "The clinic stays in charge",
+          text: "We organize the work. The judgment, the tone and the patient relationship stay with your team.",
         },
       ],
     },
@@ -435,14 +432,14 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
       ],
     },
     formIntro: {
-      eyebrow: "Design your automation",
-      title: "Tell us what you want to stop chasing manually.",
+      eyebrow: "We will review it with you",
+      title: "Leave your details and we will tell you where to start.",
       body:
-        "We do not need patient names or clinical information. Just a quick picture of how you manage scheduling, treatments, reviews and repetitive tasks.",
+        "We do not need patient records or a long list of numbers. With a short call we can spot what would make the most sense to automate first.",
       bullets: [
-        "A real person maps the process with you, not a generic bot.",
-        "No clinical data, no hidden sending and human control.",
-        "Goal: leave with 2-3 clear automations to test.",
+        "No patient data.",
+        "No CRM change to start.",
+        "A clear first proposal, not a generic demo.",
       ],
     },
     form: {
@@ -465,7 +462,7 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
       chairsPlaceholder: "3",
       currentSoftware: "Current software",
       currentSoftwarePlaceholder: "Dentidesk, Gesden, Excel...",
-      mainLeak: "What you want to automate first",
+      mainLeak: "What would you like to take off the team's plate first?",
       mainLeakOptions: mainLeakOptions.en,
       numbersTitle: "Approximate numbers to prepare the call properly",
       monthlyFirstVisits: "First visits/month",
@@ -478,12 +475,12 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
       averageTreatmentValuePlaceholder: "750",
       inactivePatients: "Inactive patients",
       inactivePatientsPlaceholder: "180",
-      message: "Tell us what is happening",
+      message: "Anything else we should know?",
       messagePlaceholder:
-        "Example: we want to automate confirmations, reactivate pending treatments, organize WhatsApp or recover recalls without sounding pushy.",
-      privacyConsent: "I accept the processing of my data to manage this review request.",
+        "Optional: too many WhatsApps, pending treatments, missed calls or a stretched front desk.",
+      privacyConsent: "I agree to be contacted to manage this audit.",
       marketingConsent: "I agree to receive commercial communications related to dental automation.",
-      submit: "Automate my follow-up",
+      submit: "Review it with me",
     },
   },
   ar: {
@@ -496,9 +493,9 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
     direction: "rtl",
     nav: {
       automations: "الأتمتة",
-      system: "النظام",
+      system: "كيف يعمل",
       audit: "المراجعة",
-      cta: "أتمتة عيادتي",
+      cta: "أريد مراجعة",
     },
     brand: {
       label: "WIADental",
@@ -506,11 +503,10 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
     },
     hero: {
       eyebrow: "أتمتة بالذكاء الاصطناعي لعيادات الأسنان",
-      title: "نؤتمت المتابعة التي لا يستطيع فريقك ملاحقتها يدوياً.",
+      title: "حتى لا يبقى أي أمر مهم معلّقاً.",
       body:
-        "مواعيد تحتاج إلى تأكيد، علاجات تنتظر رداً، مرضى غير نشطين، تقييمات ومهام استقبال متكررة. نبني تدفقات ذكاء اصطناعي متصلة بنظامك لترتيب الأولويات، تجهيز الرسائل وتفعيل المتابعة دون بيانات سريرية أو رسائل مزعجة.",
-      primaryCta: "أريد أتمتة المتابعة",
-      secondaryCta: "اعرف ما نؤتمته",
+        "نؤتمت تأكيدات المواعيد، واتساب، العلاجات المعلقة، المرضى غير النشطين والتقييمات حتى يسير اليوم بانتظام، دون زيادة العبء على الاستقبال، ومع بقاء التحكم البشري دائماً لدى العيادة.",
+      primaryCta: "أريد مراجعة",
       trust: [
         "أتمتة فوق نظامك الحالي",
         "واتساب وبريد إلكتروني ومهام للاستقبال",
@@ -541,56 +537,56 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
       },
     ],
     automations: {
-      eyebrow: "ما نؤتمته أولاً",
-      title: "نؤتمت العمل المتكرر الذي يترك أكبر فرص ضائعة.",
+      eyebrow: "من أين نبدأ",
+      title: "نبدأ بالمهام التي تتعب الفريق كل يوم.",
       body:
-        "لا نبدأ بفكرة “ذكاء اصطناعي لكل شيء”. نبدأ بتدفقات واضحة يفهمها الاستقبال ويمكن للإدارة قياسها.",
+        "لا نحتاج إلى تغيير كل شيء في العيادة. نختار لحظتين أو ثلاثاً يضيع فيها الوقت: تأكيد المواعيد، متابعة علاج معلق، التواصل مع مريض لم يزر منذ فترة أو طلب تقييم.",
       items: [
         {
           key: "schedule",
           title: "المواعيد",
-          text: "تأكيدات، تغييرات مواعيد، فراغات، تذكيرات وتنبيهات داخلية حتى يعرف الاستقبال من يجب التواصل معه.",
+          text: "تذكيرات وتنبيهات حتى لا يضطر الاستقبال إلى ملاحقة كل تأكيد يدوياً.",
         },
         {
           key: "quotes",
           title: "العلاجات",
-          text: "متابعة خطط العلاج المرسلة، التمويل، الأسئلة المتكررة ورسائل إعادة التفعيل عندما لا يرد المريض.",
+          text: "متابعة لطيفة عندما يبقى المريض يفكر في خطة علاج ولا نريد أن تبدو العيادة ملحة.",
         },
         {
           key: "patients",
           title: "مرضى غير نشطين",
-          text: "مراجعات، تنظيف، حملات عودة وطلبات تقييم برسائل توافق عليها العيادة.",
+          text: "رسائل للعودة إلى المرضى الذين ابتعدوا فترة، دون أن تبدو باردة أو آلية.",
         },
       ],
       closing:
-        "الوعد ليس أن نؤتمت أي شيء بشكل عشوائي. الوعد أن نختار ما يستحق الأتمتة، نربطه بطريقة عملك، ونقيس إن كان يستعيد فرصاً.",
-      cta: "أريد رؤية الأتمتة المناسبة",
+        "الفكرة ليست إرسال رسائل أكثر. الفكرة أن تصل الرسالة المناسبة في الوقت المناسب وبنبرة العيادة.",
+      cta: "أريد مراجعة عيادتي",
     },
     system: {
-      eyebrow: "كيف نبنيه",
-      title: "محرك أتمتة بالذكاء الاصطناعي يساعد الاستقبال على البيع بشكل أفضل دون أن يبدو كأنه روبوت.",
+      eyebrow: "طريقة العمل",
+      title: "نرى كيف يعمل يومكم، ثم نركّب ما يفيد فعلاً.",
       body:
-        "يربط البرنامج التجريبي لمدة 30 يوماً تدفقات واضحة: المواعيد، العلاجات المقترحة، المرضى غير النشطين، التقييمات والمهام الداخلية. الذكاء الاصطناعي يجهز ويرتب وينبه؛ وفريقك يحتفظ بالحكم النهائي.",
+        "لا نأتي بحل جاهز. نراجع المواعيد، واتساب، المكالمات والعلاجات المعلقة، ثم نبني أتمتة بسيطة يستطيع الفريق استخدامها.",
       blocks: [
         {
           key: "frontDesk",
-          title: "مهام آلية للاستقبال",
-          text: "يعرف الفريق أي محادثة تحتاج اهتماماً، ولماذا هي مهمة وما الإجراء المناسب، دون البحث بين واتساب والمكالمات والملاحظات المتفرقة.",
+          title: "أشياء أقل في ذهن الفريق",
+          text: "بدلاً من الاعتماد على الذاكرة والملاحظات والاستعجال، تظهر المهمة التالية بوضوح: مع من، ولماذا.",
         },
         {
           key: "followUp",
-          title: "رسائل يجهزها الذكاء الاصطناعي",
-          text: "نجهز نصوصاً حسب الحالة: تأكيد موعد، علاج، تمويل، مراجعة مؤجلة أو طلب تقييم. العيادة تراجع قبل الإرسال.",
+          title: "رسائل تشبهكم",
+          text: "نكتب الرسائل بنبرة العيادة: هادئة، مهنية وغير مزعجة. ويمكن للفريق مراجعتها قبل الإرسال.",
         },
         {
           key: "dashboard",
-          title: "رؤية أوضح للإدارة",
-          text: "مواعيد تمت استعادتها، علاجات أعيد تفعيلها، مرضى تم التواصل معهم وفرص مفتوحة في لوحة واحدة واضحة.",
+          title: "الأهم أمام الإدارة",
+          text: "تعرفون ما تم استعادته: مواعيد، علاجات، مرضى وتقييمات، دون الغرق في الجداول.",
         },
         {
           key: "control",
-          title: "تحكم بشري",
-          text: "الأتمتة تجهز العمل. فريقك يحتفظ بالحكم، النبرة والقرار النهائي.",
+          title: "القرار يبقى عند العيادة",
+          text: "نحن نرتب العمل ونخففه. فريقكم يبقى صاحب القرار في كل ما يخص العلاقة مع المريض.",
         },
       ],
     },
@@ -604,14 +600,14 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
       ],
     },
     formIntro: {
-      eyebrow: "لنصمم الأتمتة المناسبة",
-      title: "أخبرنا ما الذي تريد التوقف عن ملاحقته يدوياً.",
+      eyebrow: "نراجعها معك",
+      title: "اترك بياناتك ونخبرك من أين تبدأ.",
       body:
-        "لا نحتاج إلى أسماء المرضى أو معلومات سريرية. نحتاج فقط إلى صورة سريعة عن إدارة المواعيد والعلاجات والتقييمات والمهام المتكررة.",
+        "لا نحتاج إلى بيانات مرضى ولا إلى أرقام كثيرة. بمكالمة قصيرة نعرف ما الذي يستحق الأتمتة أولاً في عيادتك.",
       bullets: [
-        "يرد عليك شخص حقيقي لرسم العملية معك، وليس بوتاً عاماً.",
-        "لا بيانات سريرية، لا إرسال مخفي، ومع تحكم بشري.",
-        "الهدف: الخروج باثنتين أو ثلاث أتمتات واضحة للتجربة.",
+        "لا نطلب بيانات مرضى.",
+        "دون تغيير برنامجك في البداية.",
+        "اقتراح واضح، وليس عرضاً عاماً.",
       ],
     },
     form: {
@@ -634,7 +630,7 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
       chairsPlaceholder: "3",
       currentSoftware: "النظام الحالي",
       currentSoftwarePlaceholder: "Dentidesk, Gesden, Excel...",
-      mainLeak: "ما الذي تريد أتمتته أولاً",
+      mainLeak: "ما أول شيء تريد تخفيفه عن الفريق؟",
       mainLeakOptions: mainLeakOptions.ar,
       numbersTitle: "أرقام تقريبية لتحضير المكالمة جيداً",
       monthlyFirstVisits: "زيارات أولى/شهر",
@@ -647,12 +643,12 @@ export const dentalLandingCopy: Record<DentalLandingLocale, DentalLandingCopy> =
       averageTreatmentValuePlaceholder: "750",
       inactivePatients: "مرضى غير نشطين",
       inactivePatientsPlaceholder: "180",
-      message: "أخبرنا ماذا يحدث الآن",
+      message: "هل هناك شيء آخر؟",
       messagePlaceholder:
-        "مثال: نريد أتمتة تأكيد المواعيد، إعادة تفعيل علاجات معلقة، تنظيم واتساب أو استعادة المراجعات دون أن نبدو ملحين.",
-      privacyConsent: "أوافق على معالجة بياناتي لإدارة طلب هذه المراجعة.",
+        "اختياري: مثلاً واتساب كثير، علاجات لا تُغلق، أو استقبال مرهق.",
+      privacyConsent: "أوافق على التواصل معي لإدارة هذه المراجعة.",
       marketingConsent: "أوافق على تلقي رسائل تجارية متعلقة بأتمتة عيادات الأسنان.",
-      submit: "أريد أتمتة المتابعة",
+      submit: "أريد أن تراجعوه",
     },
   },
 };
