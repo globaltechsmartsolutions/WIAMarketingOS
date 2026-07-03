@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "WIAMarketingOS",
-  description: "Motor interno de campañas, captación y ventas de GlobalTech Smart Solutions",
+  description: "Internal campaign, lead generation and sales engine for GlobalTech Smart Solutions",
 };
 
 export default function RootLayout({
@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="es"
+      lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

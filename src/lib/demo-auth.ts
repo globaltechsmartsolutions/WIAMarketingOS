@@ -9,25 +9,25 @@ export const demoUsers = [
     email: "alejandro@globaltech.test",
     label: "Alejandro",
     name: "Alejandro",
-    role: "direccion",
+    role: "management",
   },
 ] as const;
 
-export type DemoRole = "direccion";
+export type DemoRole = "management";
 
 export function getDemoUserByEmail(email: string) {
   return demoUsers.find((item) => item.email === email.trim().toLowerCase());
 }
 
 export function getSafeNextPath(value: FormDataEntryValue | string | null) {
-  const path = String(value ?? "/interno/ventas");
+  const path = String(value ?? "/internal/campaigns");
 
   if (!path.startsWith("/") || path.startsWith("//")) {
-    return "/interno/ventas";
+    return "/internal/campaigns";
   }
 
   if (path.startsWith("/login") || path.startsWith("/api/")) {
-    return "/interno/ventas";
+    return "/internal/campaigns";
   }
 
   return path;

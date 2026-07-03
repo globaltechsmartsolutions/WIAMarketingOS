@@ -4,14 +4,14 @@ import { createAgencyAuditLead } from "@/lib/agency-leads";
 
 function getErrorMessage(error: unknown) {
   if (error instanceof ZodError) {
-    return error.issues[0]?.message ?? "Revisa los datos de la solicitud.";
+    return error.issues[0]?.message ?? "Review the request details.";
   }
 
   if (error instanceof Error) {
     return error.message;
   }
 
-  return "No hemos podido registrar la solicitud. Revisa los datos.";
+  return "We could not register the request. Review the details.";
 }
 
 function getRequestClientMeta(request: NextRequest) {
@@ -29,7 +29,7 @@ function getRequestClientMeta(request: NextRequest) {
 }
 
 function getRedirectUrl(request: NextRequest) {
-  const url = new URL("/auditoria-fugas-dental", request.url);
+  const url = new URL("/dental-leak-audit", request.url);
 
   if (url.hostname === "0.0.0.0") {
     url.hostname = "127.0.0.1";
@@ -68,7 +68,7 @@ async function getPayload(request: NextRequest) {
         message: String(body.message ?? ""),
         source: String(body.source ?? "landing"),
         campaign: String(body.campaign ?? ""),
-        landingPage: String(body.landingPage ?? "/auditoria-fugas-dental"),
+        landingPage: String(body.landingPage ?? "/dental-leak-audit"),
         privacyConsent: body.privacyConsent === true,
         marketingConsent: body.marketingConsent === true,
       },
@@ -97,7 +97,7 @@ async function getPayload(request: NextRequest) {
       message: String(formData.get("message") ?? ""),
       source: String(formData.get("source") ?? "landing"),
       campaign: String(formData.get("campaign") ?? ""),
-      landingPage: String(formData.get("landingPage") ?? "/auditoria-fugas-dental"),
+      landingPage: String(formData.get("landingPage") ?? "/dental-leak-audit"),
       privacyConsent: getBoolean(formData.get("privacyConsent")),
       marketingConsent: getBoolean(formData.get("marketingConsent")),
     },
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
     const { honeypot, payload } = await getPayload(request);
 
     if (honeypot.trim()) {
-      throw new Error("No hemos podido registrar la solicitud. Revisa los datos.");
+      throw new Error("We could not register the request. Review the details.");
     }
 
     const lead = await createAgencyAuditLead(payload, getRequestClientMeta(request));
@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
     }
 
     const redirectUrl = getRedirectUrl(request);
-    redirectUrl.searchParams.set("solicitud", "recibida");
+    redirectUrl.searchParams.set("request", "received");
 
     return NextResponse.redirect(redirectUrl, { status: 303 });
   } catch (error) {

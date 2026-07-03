@@ -1,5 +1,5 @@
 import { requireAppSession } from "@/lib/demo-permissions";
-import { directionRoles } from "@/lib/permissions";
+import { managementRoles } from "@/lib/permissions";
 import { InternalNav } from "./internal-nav";
 
 export default async function InternalLayout({
@@ -7,7 +7,7 @@ export default async function InternalLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await requireAppSession(directionRoles, "/interno/leads");
+  const session = await requireAppSession(managementRoles, "/internal/campaigns");
 
   return (
     <main className="min-h-screen bg-background text-foreground">

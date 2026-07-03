@@ -8,7 +8,7 @@ export default async function LoginPage({
   searchParams: Promise<{ error?: string; next?: string }>;
 }) {
   const query = await searchParams;
-  const nextPath = getSafeNextPath(query.next ?? "/interno/campanas");
+  const nextPath = getSafeNextPath(query.next ?? "/internal/campaigns");
   const hasError = query.error === "1";
 
   return (
@@ -22,26 +22,26 @@ export default async function LoginPage({
             <div>
               <p className="text-sm font-semibold text-primary">WIAMarketingOS</p>
               <h1 className="text-3xl font-semibold tracking-normal md:text-4xl">
-                Backoffice interno protegido
+                Protected Internal Backoffice
               </h1>
             </div>
           </div>
 
           <div className="grid gap-4 text-sm leading-6 text-ink-soft">
             <p>
-              Accede a la zona interna de campañas y ventas de GlobalTech. Aquí gestionamos
-              landings, auditorías, leads de clínicas y seguimiento comercial, separado de los
-              CRM que vendemos a clientes.
+              Access GlobalTech&apos;s internal campaign and sales workspace. This is where we
+              manage landing pages, audits, dental clinic leads and commercial follow-up, separate
+              from the CRM products we sell to clients.
             </p>
             <div className="rounded-lg border border-border bg-surface p-5">
               <div className="flex items-center gap-2 font-semibold text-primary">
                 <ShieldCheck size={18} aria-hidden />
-                Qué protege esta fase
+                What this phase protects
               </div>
               <ul className="mt-3 grid gap-2">
-                <li>Motor comercial separado de los productos finales.</li>
-                <li>Acceso interno para revisar oportunidades y campañas.</li>
-                <li>Leads de empresas, no pacientes ni datos sanitarios.</li>
+                <li>Internal commercial engine separated from final products.</li>
+                <li>Internal access for reviewing opportunities and campaigns.</li>
+                <li>Business leads only, never patient or medical data.</li>
               </ul>
             </div>
           </div>
@@ -54,15 +54,15 @@ export default async function LoginPage({
                 <LockKeyhole size={20} aria-hidden />
               </span>
               <div>
-                <h2 className="font-semibold">Entrar al backoffice</h2>
-                <p className="text-sm text-ink-soft">Zona interna de campañas y ventas.</p>
+                <h2 className="font-semibold">Enter the backoffice</h2>
+                <p className="text-sm text-ink-soft">Internal campaign and sales workspace.</p>
               </div>
             </div>
           </div>
 
           {hasError ? (
             <div className="border-b border-border bg-rose-50 px-6 py-4 text-sm font-semibold text-rose-700">
-              Credenciales incorrectas. Revisa usuario y clave.
+              Invalid credentials. Check the user and password.
             </div>
           ) : null}
 
@@ -70,7 +70,7 @@ export default async function LoginPage({
             <input name="next" type="hidden" value={nextPath} />
 
             <label className="grid gap-2 text-sm font-medium">
-              Acceso local
+              Local access
               <select
                 className="h-11 rounded-md border border-border bg-white px-3 outline-none focus:border-primary"
                 name="email"
@@ -78,18 +78,18 @@ export default async function LoginPage({
               >
                 {demoUsers.map((user) => (
                   <option key={user.email} value={user.email}>
-                    {user.label} · {user.email}
+                    {user.label} - {user.email}
                   </option>
                 ))}
               </select>
             </label>
 
             <label className="grid gap-2 text-sm font-medium">
-              Clave de acceso
+              Access password
               <input
                 className="h-11 rounded-md border border-border bg-white px-3 outline-none focus:border-primary"
                 name="password"
-                placeholder="Introduce la clave"
+                placeholder="Enter the password"
                 required
                 type="password"
               />
@@ -99,7 +99,7 @@ export default async function LoginPage({
               className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-primary px-5 font-semibold text-white hover:bg-primary-strong"
               type="submit"
             >
-              Entrar
+              Sign in
               <ArrowRight size={18} aria-hidden />
             </button>
           </form>

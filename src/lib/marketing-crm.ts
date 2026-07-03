@@ -1,6 +1,6 @@
 import { getDb } from "@/lib/db";
 
-export const dentalCampaignSlug = "clinica-dental-sin-fugas";
+export const dentalCampaignSlug = "dental-revenue-leak-audit";
 
 export const campaignStatusOptions = ["draft", "active", "paused", "archived"] as const;
 export const leadStatusOptions = [
@@ -22,43 +22,43 @@ export const dealStageOptions = [
 export const priorityOptions = ["normal", "media", "alta"] as const;
 
 export const campaignStatusLabels: Record<string, string> = {
-  draft: "Borrador",
-  active: "Activa",
-  paused: "Pausada",
-  archived: "Archivada",
+  draft: "Draft",
+  active: "Active",
+  paused: "Paused",
+  archived: "Archived",
 };
 
 export const leadStatusLabels: Record<string, string> = {
-  nuevo: "Nuevo",
-  cualificado: "Cualificado",
+  nuevo: "New",
+  cualificado: "Qualified",
   demo: "Demo",
-  piloto: "Piloto",
-  ganado: "Ganado",
-  perdido: "Perdido",
+  piloto: "Pilot",
+  ganado: "Won",
+  perdido: "Lost",
 };
 
 export const dealStageLabels: Record<string, string> = {
-  cualificacion: "Cualificación",
+  cualificacion: "Qualification",
   demo: "Demo",
-  propuesta: "Propuesta",
-  piloto: "Piloto",
-  ganado: "Ganado",
-  perdido: "Perdido",
+  propuesta: "Proposal",
+  piloto: "Pilot",
+  ganado: "Won",
+  perdido: "Lost",
 };
 
 export const priorityLabels: Record<string, string> = {
-  alta: "Alta",
-  media: "Media",
+  alta: "High",
+  media: "Medium",
   normal: "Normal",
 };
 
 export const mainLeakLabels: Record<string, string> = {
-  agenda: "Citas perdidas",
-  presupuestos: "Presupuestos sin seguimiento",
-  pacientes_inactivos: "Pacientes inactivos",
-  recepcion: "Recepción saturada",
-  resenas: "Reseñas y reputación",
-  no_lo_se: "Sin diagnosticar",
+  agenda: "Missed appointments",
+  presupuestos: "Quotes without follow-up",
+  pacientes_inactivos: "Inactive patients",
+  recepcion: "Overloaded front desk",
+  resenas: "Reviews and reputation",
+  no_lo_se: "Not diagnosed yet",
 };
 
 export function slugify(value: string) {
@@ -205,19 +205,19 @@ function getLeadScore(agencyLead: AgencyLeadSnapshot) {
 
 function getNextStep(agencyLead: AgencyLeadSnapshot) {
   if (agencyLead.status === "nuevo") {
-    return "Llamar en menos de 24 horas y confirmar encaje de piloto.";
+    return "Call within 24 hours and confirm pilot fit.";
   }
 
   if (agencyLead.status === "contactado") {
-    return "Agendar demo con dirección y revisar fugas principales.";
+    return "Schedule a demo with management and review the main revenue leaks.";
   }
 
   if (agencyLead.status === "demo_agendada") {
-    return "Preparar propuesta de piloto de 30 días.";
+    return "Prepare a 30-day pilot proposal.";
   }
 
   if (agencyLead.status === "piloto_abierto") {
-    return "Medir avance del piloto y preparar cierre.";
+    return "Measure pilot progress and prepare the close.";
   }
 
   return null;
@@ -240,16 +240,16 @@ async function getDentalCampaign() {
     where: { slug: dentalCampaignSlug },
     update: {
       status: "active",
-      landingPath: "/auditoria-fugas-dental",
+      landingPath: "/dental-leak-audit",
     },
     create: {
-      name: "Clínica Dental Sin Fugas",
+      name: "Dental Revenue Leak Audit",
       slug: dentalCampaignSlug,
-      vertical: "Clínicas dentales",
-      offer: "Auditoría gratuita de fugas comerciales",
+      vertical: "Dental clinics",
+      offer: "Free revenue leak audit",
       status: "active",
-      goal: "Detectar clínicas con pérdida de citas, presupuestos o pacientes inactivos y abrir piloto WIADental.",
-      landingPath: "/auditoria-fugas-dental",
+      goal: "Find clinics losing appointments, quotes or inactive patients and open a WIADental pilot.",
+      landingPath: "/dental-leak-audit",
     },
   });
 }
@@ -266,18 +266,18 @@ async function seedDemoMarketingCrm(campaignId: string) {
 
   const demos = [
     {
-      company: "Clínica Alba Madrid",
+      company: "Alba Dental Madrid",
       city: "Madrid",
-      contact: "Laura Martín",
-      role: "Gerencia",
+      contact: "Laura Martin",
+      role: "Management",
       email: "laura.martin@example.com",
       phone: "+34610000001",
       priority: "alta",
       status: "demo",
       score: 86,
       valueCents: 420000,
-      problem: "Presupuestos de ortodoncia sin seguimiento y recepción saturada por WhatsApp.",
-      nextStep: "Enviar resumen de demo y propuesta de piloto.",
+      problem: "Orthodontic quotes without follow-up and a front desk overloaded by WhatsApp.",
+      nextStep: "Send demo recap and pilot proposal.",
     },
     {
       company: "Dental Sierra Valencia",
@@ -290,22 +290,22 @@ async function seedDemoMarketingCrm(campaignId: string) {
       status: "cualificado",
       score: 62,
       valueCents: 260000,
-      problem: "Pacientes inactivos y revisiones vencidas sin reactivación.",
-      nextStep: "Agendar demo con dirección.",
+      problem: "Inactive patients and overdue checkups without reactivation.",
+      nextStep: "Schedule a demo with management.",
     },
     {
-      company: "Clínica Miramar Málaga",
-      city: "Málaga",
+      company: "Miramar Dental Malaga",
+      city: "Malaga",
       contact: "Ana Ruiz",
-      role: "Recepción",
+      role: "Front desk",
       email: "ana.ruiz@example.com",
       phone: "+34610000003",
       priority: "normal",
       status: "nuevo",
       score: 42,
       valueCents: 180000,
-      problem: "Citas no confirmadas y huecos de agenda que no se rellenan.",
-      nextStep: "Llamar para cualificar volumen y software actual.",
+      problem: "Unconfirmed appointments and empty calendar slots that are not refilled.",
+      nextStep: "Call to qualify volume and current software.",
     },
   ];
 
@@ -313,11 +313,11 @@ async function seedDemoMarketingCrm(campaignId: string) {
     const company = await db.company.create({
       data: {
         name: item.company,
-        sector: "Clínica dental",
+        sector: "Dental clinic",
         city: item.city,
-        sizeLabel: "2-4 sillones",
+        sizeLabel: "2-4 chairs",
         source: "demo_seed",
-        notes: "Empresa demo para validar el CRM de marketing.",
+        notes: "Demo company for validating the marketing CRM.",
       },
     });
     const contact = await db.contact.create({
@@ -337,11 +337,11 @@ async function seedDemoMarketingCrm(campaignId: string) {
         campaignId,
         companyId: company.id,
         contactId: contact.id,
-        title: `Auditoría dental - ${item.company}`,
+        title: `Dental audit - ${item.company}`,
         status: item.status,
         priority: item.priority,
         source: "demo_seed",
-        landingPage: "/auditoria-fugas-dental",
+        landingPage: "/dental-leak-audit",
         problem: item.problem,
         estimatedValueMin: item.valueCents,
         estimatedValueMax: Math.round(item.valueCents * 1.75),
@@ -356,7 +356,7 @@ async function seedDemoMarketingCrm(campaignId: string) {
         companyId: company.id,
         contactId: contact.id,
         leadId: lead.id,
-        title: `Piloto WIADental - ${item.company}`,
+        title: `WIADental pilot - ${item.company}`,
         stage,
         status: dealStageToStatus(stage),
         valueCents: item.valueCents,
@@ -373,9 +373,9 @@ async function seedDemoMarketingCrm(campaignId: string) {
         leadId: lead.id,
         dealId: deal.id,
         type: "seed",
-        title: "Lead demo preparado",
+        title: "Demo lead prepared",
         notes: item.problem,
-        createdBy: "Sistema",
+        createdBy: "System",
       },
     });
 
@@ -423,11 +423,11 @@ export async function syncAgencyAuditLeadToMarketingCrm(agencyLead: AgencyLeadSn
     (await db.company.create({
       data: {
         name: agencyLead.clinicName,
-        sector: "Clínica dental",
+        sector: "Dental clinic",
         city: agencyLead.city,
-        sizeLabel: agencyLead.chairs ? `${agencyLead.chairs} sillones` : null,
+        sizeLabel: agencyLead.chairs ? `${agencyLead.chairs} chairs` : null,
         source: agencyLead.source || "landing",
-        notes: agencyLead.currentSoftware ? `Software actual: ${agencyLead.currentSoftware}.` : null,
+        notes: agencyLead.currentSoftware ? `Current software: ${agencyLead.currentSoftware}.` : null,
       },
     }));
 
@@ -455,23 +455,21 @@ export async function syncAgencyAuditLeadToMarketingCrm(agencyLead: AgencyLeadSn
     where: { agencyLeadId: agencyLead.id },
     select: { id: true },
   });
+  const problem = [mainLeakLabels[agencyLead.mainLeak] ?? agencyLead.mainLeak, agencyLead.message]
+    .filter(Boolean)
+    .join(" - ");
   const lead = await db.lead.upsert({
     where: { agencyLeadId: agencyLead.id },
     update: {
       campaignId: campaign.id,
       companyId: company.id,
       contactId: contact.id,
-      title: `Auditoría dental - ${agencyLead.clinicName}`,
+      title: `Dental audit - ${agencyLead.clinicName}`,
       status,
       priority: agencyLead.priority,
       source: agencyLead.source || "landing",
       landingPage: agencyLead.landingPage,
-      problem: [
-        mainLeakLabels[agencyLead.mainLeak] ?? agencyLead.mainLeak,
-        agencyLead.message,
-      ]
-        .filter(Boolean)
-        .join(" · "),
+      problem,
       estimatedValueMin: agencyLead.estimatedLeakMin,
       estimatedValueMax: agencyLead.estimatedLeakMax,
       score,
@@ -482,17 +480,12 @@ export async function syncAgencyAuditLeadToMarketingCrm(agencyLead: AgencyLeadSn
       companyId: company.id,
       contactId: contact.id,
       agencyLeadId: agencyLead.id,
-      title: `Auditoría dental - ${agencyLead.clinicName}`,
+      title: `Dental audit - ${agencyLead.clinicName}`,
       status,
       priority: agencyLead.priority,
       source: agencyLead.source || "landing",
       landingPage: agencyLead.landingPage,
-      problem: [
-        mainLeakLabels[agencyLead.mainLeak] ?? agencyLead.mainLeak,
-        agencyLead.message,
-      ]
-        .filter(Boolean)
-        .join(" · "),
+      problem,
       estimatedValueMin: agencyLead.estimatedLeakMin,
       estimatedValueMax: agencyLead.estimatedLeakMax,
       score,
@@ -510,7 +503,7 @@ export async function syncAgencyAuditLeadToMarketingCrm(agencyLead: AgencyLeadSn
     companyId: company.id,
     contactId: contact.id,
     leadId: lead.id,
-    title: `Piloto WIADental - ${agencyLead.clinicName}`,
+    title: `WIADental pilot - ${agencyLead.clinicName}`,
     stage,
     status: dealStageToStatus(stage),
     valueCents: getDealValue(agencyLead),
@@ -535,9 +528,9 @@ export async function syncAgencyAuditLeadToMarketingCrm(agencyLead: AgencyLeadSn
         leadId: lead.id,
         dealId: deal.id,
         type: "formulario",
-        title: "Solicitud de auditoría sincronizada",
-        notes: `Entrada desde ${agencyLead.landingPage ?? "landing"}. Score inicial: ${score}.`,
-        createdBy: "Sistema",
+        title: "Audit request synced",
+        notes: `Entry from ${agencyLead.landingPage ?? "landing"}. Initial score: ${score}.`,
+        createdBy: "System",
       },
     });
 
@@ -548,7 +541,7 @@ export async function syncAgencyAuditLeadToMarketingCrm(agencyLead: AgencyLeadSn
         contactId: contact.id,
         leadId: lead.id,
         dealId: deal.id,
-        title: nextStep ?? "Revisar lead y definir siguiente paso.",
+        title: nextStep ?? "Review lead and define the next step.",
         status: "open",
         priority: agencyLead.priority,
         dueAt: addDays(new Date(), agencyLead.priority === "alta" ? 1 : 3),

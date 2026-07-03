@@ -17,7 +17,7 @@ import {
   priorityOptions,
   slugify,
 } from "@/lib/marketing-crm";
-import { directionRoles } from "@/lib/permissions";
+import { managementRoles } from "@/lib/permissions";
 
 const campaignSchema = z.object({
   name: z.string().trim().min(3).max(120),
@@ -35,7 +35,7 @@ const campaignSchema = z.object({
 function safeReturnTo(value: FormDataEntryValue | null, fallback: string) {
   const returnTo = String(value ?? fallback);
 
-  if (!returnTo.startsWith("/interno/")) {
+  if (!returnTo.startsWith("/internal/")) {
     return fallback;
   }
 
@@ -50,13 +50,13 @@ function withNotice(path: string, notice: string, hash?: string) {
 }
 
 function revalidateInternalCrm() {
-  revalidatePath("/interno/campanas");
-  revalidatePath("/interno/leads");
-  revalidatePath("/interno/deals");
+  revalidatePath("/internal/campaigns");
+  revalidatePath("/internal/leads");
+  revalidatePath("/internal/deals");
 }
 
 export async function createCampaign(formData: FormData) {
-  const session = await requireAppSession(directionRoles);
+  const session = await requireAppSession(managementRoles);
   const db = getDb();
   const parsed = campaignSchema.parse({
     name: formData.get("name"),
@@ -67,7 +67,7 @@ export async function createCampaign(formData: FormData) {
     budgetEuros: formData.get("budgetEuros"),
     status: cleanEnumValue(formData.get("status"), campaignStatusOptions, "draft"),
   });
-  const baseSlug = slugify(parsed.name) || "campana";
+  const baseSlug = slugify(parsed.name) || "campaign";
   let slug = baseSlug;
   let suffix = 2;
 
@@ -89,8 +89,8 @@ export async function createCampaign(formData: FormData) {
       activities: {
         create: {
           type: "campaign_created",
-          title: "Campaña creada",
-          notes: `Creada por ${session.user.name}.`,
+          title: "Campaign created",
+          notes: `Created by ${session.user.name}.`,
           createdBy: session.user.name,
         },
       },
@@ -98,18 +98,18 @@ export async function createCampaign(formData: FormData) {
   });
 
   revalidateInternalCrm();
-  redirect(withNotice("/interno/campanas", "campaign_created", `campaign-${campaign.id}`));
+  redirect(withNotice("/internal/campaigns", "campaign_created", `campaign-${campaign.id}`));
 }
 
 export async function updateLeadStatus(formData: FormData) {
-  const session = await requireAppSession(directionRoles);
+  const session = await requireAppSession(managementRoles);
   const db = getDb();
   const leadId = String(formData.get("leadId") ?? "");
   const status = cleanEnumValue(formData.get("status"), leadStatusOptions, "nuevo");
-  const returnTo = safeReturnTo(formData.get("returnTo"), "/interno/leads");
+  const returnTo = safeReturnTo(formData.get("returnTo"), "/internal/leads");
 
   if (!leadId) {
-    throw new Error("Lead no válido.");
+    throw new Error("Invalid lead.");
   }
 
   const lead = await db.lead.findUnique({
@@ -118,7 +118,7 @@ export async function updateLeadStatus(formData: FormData) {
   });
 
   if (!lead) {
-    throw new Error("Lead no encontrado.");
+    throw new Error("Lead not found.");
   }
 
   const stage = leadStatusToDealStage(status);
@@ -147,8 +147,8 @@ export async function updateLeadStatus(formData: FormData) {
         leadId: lead.id,
         dealId: lead.deals[0]?.id,
         type: "lead_status",
-        title: `Lead movido a ${status}`,
-        notes: `Cambio realizado por ${session.user.name}. Estado anterior: ${lead.status}.`,
+        title: `Lead moved to ${status}`,
+        notes: `Changed by ${session.user.name}. Previous status: ${lead.status}.`,
         createdBy: session.user.name,
       },
     }),
@@ -159,20 +159,20 @@ export async function updateLeadStatus(formData: FormData) {
 }
 
 export async function updateLeadPriority(formData: FormData) {
-  const session = await requireAppSession(directionRoles);
+  const session = await requireAppSession(managementRoles);
   const db = getDb();
   const leadId = String(formData.get("leadId") ?? "");
   const priority = cleanEnumValue(formData.get("priority"), priorityOptions, "normal");
-  const returnTo = safeReturnTo(formData.get("returnTo"), "/interno/leads");
+  const returnTo = safeReturnTo(formData.get("returnTo"), "/internal/leads");
 
   if (!leadId) {
-    throw new Error("Lead no válido.");
+    throw new Error("Invalid lead.");
   }
 
   const lead = await db.lead.findUnique({ where: { id: leadId } });
 
   if (!lead) {
-    throw new Error("Lead no encontrado.");
+    throw new Error("Lead not found.");
   }
 
   await db.$transaction([
@@ -187,8 +187,8 @@ export async function updateLeadPriority(formData: FormData) {
         contactId: lead.contactId,
         leadId: lead.id,
         type: "lead_priority",
-        title: `Prioridad cambiada a ${priority}`,
-        notes: `Cambio realizado por ${session.user.name}. Prioridad anterior: ${lead.priority}.`,
+        title: `Priority changed to ${priority}`,
+        notes: `Changed by ${session.user.name}. Previous priority: ${lead.priority}.`,
         createdBy: session.user.name,
       },
     }),
@@ -199,15 +199,15 @@ export async function updateLeadPriority(formData: FormData) {
 }
 
 export async function addLeadActivity(formData: FormData) {
-  const session = await requireAppSession(directionRoles);
+  const session = await requireAppSession(managementRoles);
   const db = getDb();
   const leadId = String(formData.get("leadId") ?? "");
   const title = String(formData.get("title") ?? "").trim();
   const notes = String(formData.get("notes") ?? "").trim();
-  const returnTo = safeReturnTo(formData.get("returnTo"), "/interno/leads");
+  const returnTo = safeReturnTo(formData.get("returnTo"), "/internal/leads");
 
   if (!leadId) {
-    throw new Error("Lead no válido.");
+    throw new Error("Invalid lead.");
   }
 
   if (title.length < 3 && notes.length < 3) {
@@ -220,7 +220,7 @@ export async function addLeadActivity(formData: FormData) {
   });
 
   if (!lead) {
-    throw new Error("Lead no encontrado.");
+    throw new Error("Lead not found.");
   }
 
   await db.activity.create({
@@ -230,8 +230,8 @@ export async function addLeadActivity(formData: FormData) {
       contactId: lead.contactId,
       leadId: lead.id,
       dealId: lead.deals[0]?.id,
-      type: "nota",
-      title: title || "Nota comercial",
+      type: "note",
+      title: title || "Commercial note",
       notes: notes || null,
       createdBy: session.user.name,
     },
@@ -242,12 +242,12 @@ export async function addLeadActivity(formData: FormData) {
 }
 
 export async function createLeadTask(formData: FormData) {
-  const session = await requireAppSession(directionRoles);
+  const session = await requireAppSession(managementRoles);
   const db = getDb();
   const leadId = String(formData.get("leadId") ?? "");
   const title = String(formData.get("title") ?? "").trim();
   const dueDays = Number(formData.get("dueDays") ?? 1);
-  const returnTo = safeReturnTo(formData.get("returnTo"), "/interno/leads");
+  const returnTo = safeReturnTo(formData.get("returnTo"), "/internal/leads");
 
   if (!leadId || title.length < 3) {
     redirect(withNotice(returnTo, "task_missing", leadId ? `lead-${leadId}` : undefined));
@@ -259,7 +259,7 @@ export async function createLeadTask(formData: FormData) {
   });
 
   if (!lead) {
-    throw new Error("Lead no encontrado.");
+    throw new Error("Lead not found.");
   }
 
   await db.task.create({
@@ -281,19 +281,19 @@ export async function createLeadTask(formData: FormData) {
 }
 
 export async function completeTask(formData: FormData) {
-  const session = await requireAppSession(directionRoles);
+  const session = await requireAppSession(managementRoles);
   const db = getDb();
   const taskId = String(formData.get("taskId") ?? "");
-  const returnTo = safeReturnTo(formData.get("returnTo"), "/interno/leads");
+  const returnTo = safeReturnTo(formData.get("returnTo"), "/internal/leads");
 
   if (!taskId) {
-    throw new Error("Tarea no válida.");
+    throw new Error("Invalid task.");
   }
 
   const task = await db.task.findUnique({ where: { id: taskId } });
 
   if (!task) {
-    throw new Error("Tarea no encontrada.");
+    throw new Error("Task not found.");
   }
 
   await db.$transaction([
@@ -309,8 +309,8 @@ export async function completeTask(formData: FormData) {
         leadId: task.leadId,
         dealId: task.dealId,
         type: "task_done",
-        title: "Tarea completada",
-        notes: `${task.title}. Completada por ${session.user.name}.`,
+        title: "Task completed",
+        notes: `${task.title}. Completed by ${session.user.name}.`,
         createdBy: session.user.name,
       },
     }),
@@ -321,15 +321,15 @@ export async function completeTask(formData: FormData) {
 }
 
 export async function updateDealStage(formData: FormData) {
-  const session = await requireAppSession(directionRoles);
+  const session = await requireAppSession(managementRoles);
   const db = getDb();
   const dealId = String(formData.get("dealId") ?? "");
   const stage = cleanEnumValue(formData.get("stage"), dealStageOptions, "cualificacion");
   const lostReason = String(formData.get("lostReason") ?? "").trim();
-  const returnTo = safeReturnTo(formData.get("returnTo"), "/interno/deals");
+  const returnTo = safeReturnTo(formData.get("returnTo"), "/internal/deals");
 
   if (!dealId) {
-    throw new Error("Oportunidad no válida.");
+    throw new Error("Invalid opportunity.");
   }
 
   if (stage === "perdido" && lostReason.length < 3) {
@@ -339,7 +339,7 @@ export async function updateDealStage(formData: FormData) {
   const deal = await db.deal.findUnique({ where: { id: dealId } });
 
   if (!deal) {
-    throw new Error("Oportunidad no encontrada.");
+    throw new Error("Opportunity not found.");
   }
 
   const now = new Date();
@@ -382,9 +382,9 @@ export async function updateDealStage(formData: FormData) {
         leadId: deal.leadId,
         dealId: deal.id,
         type: "deal_stage",
-        title: `Oportunidad movida a ${stage}`,
+        title: `Opportunity moved to ${stage}`,
         notes: [
-          `Cambio realizado por ${session.user.name}. Etapa anterior: ${deal.stage}.`,
+          `Changed by ${session.user.name}. Previous stage: ${deal.stage}.`,
           lostReason || null,
         ]
           .filter(Boolean)

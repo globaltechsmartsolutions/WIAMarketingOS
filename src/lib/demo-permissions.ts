@@ -25,7 +25,7 @@ export async function getCurrentAppSession(): Promise<AppSession | null> {
   const sessionValue = cookieStore.get(demoSessionCookie)?.value;
   const role = cookieStore.get(demoRoleCookie)?.value as DemoRole | undefined;
 
-  if (sessionValue !== demoSessionValue || role !== "direccion") {
+  if (sessionValue !== demoSessionValue || role !== "management") {
     return null;
   }
 
@@ -47,7 +47,7 @@ export async function getCurrentAppSession(): Promise<AppSession | null> {
 
 export async function requireAppSession(
   requirement: PermissionRequirement,
-  nextPath = "/interno/campanas",
+  nextPath = "/internal/campaigns",
 ): Promise<AppSession> {
   const session = await getCurrentAppSession();
 

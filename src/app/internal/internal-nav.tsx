@@ -12,9 +12,9 @@ import {
 } from "lucide-react";
 
 const navItems = [
-  { href: "/interno/campanas", label: "Campañas", Icon: Megaphone },
-  { href: "/interno/leads", label: "Leads", Icon: UsersRound },
-  { href: "/interno/deals", label: "Oportunidades", Icon: BarChart3 },
+  { href: "/internal/campaigns", label: "Campaigns", Icon: Megaphone },
+  { href: "/internal/leads", label: "Leads", Icon: UsersRound },
+  { href: "/internal/deals", label: "Opportunities", Icon: BarChart3 },
 ];
 
 export function InternalNav({ userName }: { userName: string }) {
@@ -29,7 +29,7 @@ export function InternalNav({ userName }: { userName: string }) {
           </span>
           <span className="min-w-0">
             <span className="block text-sm font-semibold text-primary">WIAMarketingOS</span>
-            <span className="block truncate text-lg font-semibold">CRM central de marketing</span>
+            <span className="block truncate text-lg font-semibold">Central Marketing CRM</span>
           </span>
         </Link>
 
@@ -57,22 +57,22 @@ export function InternalNav({ userName }: { userName: string }) {
         <div className="flex items-center justify-between gap-2 lg:justify-end">
           <div className="hidden text-right text-xs text-ink-soft sm:block">
             <span className="block font-semibold text-foreground">{userName}</span>
-            <span>Dirección comercial</span>
+            <span>Commercial management</span>
           </div>
           <Link
-            href="/auditoria-fugas-dental"
+            href="/dental-leak-audit"
             className="inline-flex h-10 shrink-0 items-center gap-2 rounded-md border border-border bg-background px-3 text-sm font-semibold hover:bg-muted"
           >
             Landing
             <ExternalLink size={15} aria-hidden />
           </Link>
           <Link
-            href="/interno/ventas"
+            href="/internal/leads"
             className="inline-flex h-10 shrink-0 items-center gap-2 rounded-md border border-border bg-background px-3 text-sm font-semibold hover:bg-muted"
-            title="Alias antiguo"
+            title="Sales alias"
           >
             <ClipboardList size={15} aria-hidden />
-            Ventas
+            Sales
           </Link>
         </div>
       </div>

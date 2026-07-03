@@ -32,16 +32,16 @@ const mainLeakValues = [
 ] as const;
 
 export const agencyAuditLeadSchema = z.object({
-  clinicName: z.string().trim().min(2, "Indica el nombre de la clínica.").max(140),
-  contactName: z.string().trim().min(2, "Indica tu nombre.").max(120),
+  clinicName: z.string().trim().min(2, "Enter the clinic name.").max(140),
+  contactName: z.string().trim().min(2, "Enter your name.").max(120),
   role: optionalText(80),
-  phone: z.string().trim().min(6, "Indica un teléfono válido.").max(30),
-  email: z.string().trim().email("Indica un email válido.").max(160),
+  phone: z.string().trim().min(6, "Enter a valid phone number.").max(30),
+  email: z.string().trim().email("Enter a valid email address.").max(160),
   city: optionalText(80),
   chairs: optionalInteger(60),
   currentSoftware: optionalText(120),
   mainLeak: z.enum(mainLeakValues, {
-    error: "Selecciona dónde notas más fuga comercial.",
+    error: "Select where you notice the biggest commercial leak.",
   }),
   monthlyFirstVisits: optionalInteger(10000),
   missedAppointments: optionalInteger(10000),
@@ -115,7 +115,7 @@ export async function createAgencyAuditLead(
   const parsed = agencyAuditLeadSchema.parse(input);
 
   if (!parsed.privacyConsent) {
-    throw new Error("El consentimiento para gestionar la solicitud es obligatorio.");
+    throw new Error("Consent to manage the request is required.");
   }
 
   const { estimatedLeakMin, estimatedLeakMax } = calculateLeakEstimate(parsed);
@@ -152,9 +152,9 @@ export async function createAgencyAuditLead(
       userAgent: requestMeta.userAgent,
       activities: {
         create: {
-          type: "formulario",
-          title: "Solicitud de auditoría recibida",
-          notes: `Fuga principal: ${parsed.mainLeak}. Estimación orientativa: ${estimatedLeakMin}-${estimatedLeakMax} céntimos.`,
+          type: "form",
+          title: "Audit request received",
+          notes: `Main leak: ${parsed.mainLeak}. Directional estimate: ${estimatedLeakMin}-${estimatedLeakMax} cents.`,
         },
       },
     },

@@ -1,40 +1,38 @@
-# Documentación de WIAMarketingOS
+# WIAMarketingOS Documentation
 
-WIAMarketingOS es el motor interno de campañas, captación y ventas de GlobalTech Smart Solutions.
-
-La idea central es clara:
+WIAMarketingOS is GlobalTech Smart Solutions' internal engine for campaigns, acquisition and sales.
 
 ```text
-CRMProDental = producto que vendemos a clínicas
-WIAMarketingOS = sistema interno para captar, cualificar y vender productos
+CRMProDental     = product sold to dental clinics
+WIAMarketingOS  = internal system to attract, qualify and sell products
 ```
 
-Este repositorio no debe convertirse en un CRM clínico ni almacenar datos sanitarios. Aquí viven campañas, landings, formularios, leads, empresas, contactos, oportunidades, automatizaciones, eventos y generación asistida por IA.
+This repository must not become a clinical CRM and must not store health data. It manages campaigns, landing pages, forms, leads, companies, contacts, opportunities, automations, events and AI-assisted generation.
 
-## Índice
+## Index
 
-- [Visión de producto](./00-vision-producto.md)
-- [Investigación y referencias](./01-investigacion-referencias.md)
-- [Arquitectura recomendada](./02-arquitectura.md)
-- [Modelo de datos objetivo](./03-modelo-datos.md)
-- [Generador de pantallas con IA](./04-generador-pantallas-ia.md)
-- [Cumplimiento, privacidad y riesgos](./05-compliance.md)
-- [Roadmap por fases](./06-roadmap.md)
-- [Plan de implementación](./07-plan-implementacion.md)
+- [Product vision](./product-vision.md)
+- [Research and references](./research-references.md)
+- [Architecture](./architecture.md)
+- [Data model](./data-model.md)
+- [AI screen generator](./ai-screen-generator.md)
+- [Compliance](./compliance.md)
+- [Roadmap](./roadmap.md)
+- [Implementation plan](./implementation-plan.md)
 
-## Decisión principal
+## Main Decision
 
-Durante la fase inicial, WIAMarketingOS debe ser un solo proyecto, organizado como monolito modular. No conviene separar en varios repos todavía.
+During the initial phase, WIAMarketingOS should remain one modular monolith. Splitting it into multiple repositories or services too early would slow down validation.
 
-Más adelante, si crecen el volumen de eventos, las automatizaciones o la generación IA, podremos extraer piezas a un monorepo:
+Later, if event volume, automation volume or AI generation grows, the natural evolution can be a monorepo:
 
 ```text
-apps/web          panel interno, landings y generador
-apps/worker       automatizaciones pesadas
-apps/tracker      recepción de eventos
-packages/db       Prisma y modelos compartidos
-packages/ui       sistema visual
-packages/ai       generación estructurada
+apps/web          internal panel, landing pages and generator
+apps/worker       automation jobs and scheduled tasks
+apps/tracker      event ingestion
+packages/db       shared schema and queries
+packages/ai       structured generation
+packages/ui       shared UI system
 ```
 
-Ahora mismo la prioridad es avanzar rápido, mantener una sola base de datos y separar bien los dominios dentro del mismo repo.
+Right now the priority is speed, one database and clear internal domain boundaries.

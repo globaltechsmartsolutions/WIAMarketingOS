@@ -11,23 +11,23 @@ import {
 
 const features: { title: string; text: string; Icon: LucideIcon }[] = [
   {
-    title: "Landings",
-    text: "Páginas de captación por nicho y campaña.",
+    title: "Landing Pages",
+    text: "Lead-generation pages by niche, offer and campaign.",
     Icon: Globe2,
   },
   {
     title: "Leads",
-    text: "Solicitudes entrantes con prioridad comercial.",
+    text: "Inbound requests with source, score and commercial priority.",
     Icon: ClipboardCheck,
   },
   {
     title: "Pipeline",
-    text: "Estados, notas, llamadas y motivos de pérdida.",
+    text: "Stages, notes, calls, tasks and loss reasons in one place.",
     Icon: BarChart3,
   },
   {
-    title: "Separación",
-    text: "Campañas internas fuera del CRM del cliente.",
+    title: "Separation",
+    text: "Internal campaigns stay separate from the CRM products sold to clients.",
     Icon: ShieldCheck,
   },
 ];
@@ -49,22 +49,22 @@ export default function Home() {
             </div>
           </div>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-ink-soft">
-            Motor interno para lanzar campañas, captar leads cualificados y gestionar el
-            seguimiento comercial sin mezclarlo con los CRM que vendemos a clientes.
+            Internal operating system for launching campaigns, generating qualified leads and
+            managing sales follow-up without mixing it with the CRM products we sell to clients.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-primary px-5 font-semibold text-white hover:bg-primary-strong"
-              href="/auditoria-fugas-dental"
+              href="/dental-leak-audit"
             >
-              Ver landing dental
+              View dental landing page
               <ArrowRight size={18} aria-hidden />
             </Link>
             <Link
               className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-border bg-surface px-5 font-semibold hover:bg-muted"
-              href="/interno/campanas"
+              href="/internal/campaigns"
             >
-              Abrir CRM interno
+              Open internal CRM
             </Link>
           </div>
         </div>

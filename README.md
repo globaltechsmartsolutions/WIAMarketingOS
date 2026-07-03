@@ -1,38 +1,39 @@
 # WIAMarketingOS
 
-Motor interno de campañas, captación, generación de pantallas y ventas de GlobalTech Smart Solutions.
+Internal campaign, lead generation, AI screen generation and sales operating system for GlobalTech Smart Solutions.
 
-Este repositorio está separado de los CRM que se venden a clientes. Aquí viven las campañas, landings, formularios, leads, empresas, contactos, oportunidades, eventos, automatizaciones y generación asistida por IA.
+This repository is separate from the CRM products sold to clients. It owns campaigns, landing pages, forms, leads, companies, contacts, opportunities, events, automations and AI-assisted generation.
 
 ```text
-CRMProDental = producto que vendemos a clínicas
-WIAMarketingOS = sistema interno para captar, cualificar y vender productos
+CRMProDental     = product sold to dental clinics
+WIAMarketingOS  = internal system to attract, qualify and sell products
 ```
 
-## Documentación
+## Documentation
 
-La estrategia y el roadmap están en [`docs/`](./docs/README.md):
+The strategy and roadmap live in [`docs/`](./docs/README.md):
 
-- [Visión de producto](./docs/00-vision-producto.md)
-- [Investigación y referencias](./docs/01-investigacion-referencias.md)
-- [Arquitectura recomendada](./docs/02-arquitectura.md)
-- [Modelo de datos objetivo](./docs/03-modelo-datos.md)
-- [Generador de pantallas con IA](./docs/04-generador-pantallas-ia.md)
-- [Cumplimiento, privacidad y riesgos](./docs/05-compliance.md)
-- [Roadmap por fases](./docs/06-roadmap.md)
-- [Plan de implementación](./docs/07-plan-implementacion.md)
+- [Product vision](./docs/product-vision.md)
+- [Research and references](./docs/research-references.md)
+- [Architecture](./docs/architecture.md)
+- [Data model](./docs/data-model.md)
+- [AI screen generator](./docs/ai-screen-generator.md)
+- [Compliance](./docs/compliance.md)
+- [Roadmap](./docs/roadmap.md)
+- [Implementation plan](./docs/implementation-plan.md)
 
-## Rutas actuales
+## Main Routes
 
-- `/` - entrada del sistema.
-- `/auditoria-fugas-dental` - landing pública de captación para clínicas dentales.
-- `/interno/campanas` - CRM central de campañas.
-- `/interno/leads` - bandeja de leads, empresas, contactos, actividades y tareas.
-- `/interno/deals` - pipeline de oportunidades.
-- `/interno/ventas` - alias antiguo que redirige a `/interno/leads`.
-- `/api/agency/audits` - endpoint que recibe solicitudes de auditoría.
+- `/dental-leak-audit` - public acquisition landing page for dental clinics.
+- `/internal/campaigns` - central campaign CRM.
+- `/internal/leads` - leads, companies, contacts, activities and tasks.
+- `/internal/deals` - opportunity pipeline.
+- `/internal/sales` - alias that redirects to `/internal/leads`.
+- `/api/agency/audits` - endpoint that receives audit requests.
 
-## Desarrollo
+Legacy Spanish routes are kept as redirects or compatibility aliases, but new work should use the English routes above.
+
+## Local Development
 
 ```bash
 npm install
@@ -40,25 +41,24 @@ npm run db:generate
 npm run dev
 ```
 
-Configura `DATABASE_URL` antes de ejecutar migraciones o usar el backoffice con datos reales.
-
-## Base de datos
+The application expects a PostgreSQL `DATABASE_URL`.
 
 ```bash
 npm run db:migrate
-npm run db:deploy
-npm run db:studio
+npm run build
+npm run lint
 ```
 
-## Credencial local de demo
+## Current State
 
-- Usuario: `alejandro@globaltech.test`
-- Clave: `demo2026` o el valor de `INTERNAL_DEMO_PASSWORD`
+Phase 1 of the roadmap is implemented:
 
-## Estado actual
+- Marketing CRM data models.
+- Dental demo seed.
+- Incoming audit synchronization into the central CRM.
+- Internal campaign, lead and opportunity screens.
+- English public and internal routes.
 
-La Fase 1 del roadmap ya está implementada: modelos de CRM de marketing, seed/demo dental, sincronización de auditorías entrantes y pantallas internas de campañas, leads y oportunidades.
+## Next Milestone
 
-## Próximo hito
-
-El siguiente hito recomendado es la Fase 2 del roadmap: Campaign Builder para crear, editar, duplicar y medir campañas desde UI sin tocar código.
+The recommended next milestone is Phase 2: a Campaign Builder that lets us create, edit, duplicate and measure campaigns from the UI without touching code.

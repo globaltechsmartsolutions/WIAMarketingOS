@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { CalendarX2, Calculator, FileClock, UsersRound } from "lucide-react";
 
 function formatEuros(value: number) {
-  return new Intl.NumberFormat("es-ES", {
+  return new Intl.NumberFormat("en-IE", {
     currency: "EUR",
     maximumFractionDigits: 0,
     style: "currency",
@@ -19,7 +19,7 @@ function clamp(value: number, max: number) {
   return Math.min(value, max);
 }
 
-export function FugasCalculator() {
+export function LeakCalculator() {
   const [missedAppointments, setMissedAppointments] = useState(8);
   const [openQuotes, setOpenQuotes] = useState(12);
   const [inactivePatients, setInactivePatients] = useState(180);
@@ -40,53 +40,53 @@ export function FugasCalculator() {
   const fields = [
     {
       icon: CalendarX2,
-      label: "Citas perdidas o no confirmadas al mes",
+      label: "Missed or unconfirmed appointments per month",
       max: 80,
       min: 0,
       onChange: setMissedAppointments,
-      suffix: "citas",
+      suffix: "appointments",
       value: missedAppointments,
     },
     {
       icon: FileClock,
-      label: "Presupuestos enviados sin seguimiento",
+      label: "Treatment quotes sent without follow-up",
       max: 120,
       min: 0,
       onChange: setOpenQuotes,
-      suffix: "presupuestos",
+      suffix: "quotes",
       value: openQuotes,
     },
     {
       icon: UsersRound,
-      label: "Pacientes sin revisión o higiene pendiente",
+      label: "Patients overdue for recall or hygiene",
       max: 800,
       min: 0,
       onChange: setInactivePatients,
-      suffix: "pacientes",
+      suffix: "patients",
       value: inactivePatients,
     },
     {
       icon: Calculator,
-      label: "Valor medio aproximado por tratamiento",
+      label: "Approximate average treatment value",
       max: 5000,
       min: 80,
       onChange: setAverageTreatment,
-      suffix: "€",
+      suffix: "EUR",
       value: averageTreatment,
     },
   ];
 
   return (
-    <section id="calculadora" className="border-y border-border bg-surface">
+    <section id="calculator" className="border-y border-border bg-surface">
       <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
-          <p className="text-sm font-semibold text-primary">Calculadora orientativa</p>
+          <p className="text-sm font-semibold text-primary">Directional calculator</p>
           <h2 className="mt-2 text-3xl font-semibold leading-tight md:text-4xl">
-            Pon números a las fugas antes de comprar otro software.
+            Put a number on revenue leaks before buying another tool.
           </h2>
           <p className="mt-4 max-w-xl text-base leading-7 text-ink-soft">
-            No promete resultados automáticos. Sirve para abrir una conversación con datos:
-            agenda, presupuestos y pacientes que ya existen en la clínica.
+            This does not promise automatic results. It helps start a data-backed conversation
+            about appointments, quotes and patients that already exist inside the clinic.
           </p>
           <div className="mt-7 grid gap-4">
             {fields.map((field) => {
@@ -101,7 +101,7 @@ export function FugasCalculator() {
                     <span className="min-w-0">
                       <span className="block text-sm font-semibold">{field.label}</span>
                       <span className="mt-1 block text-xs text-ink-soft">
-                        Valor actual: {field.value} {field.suffix}
+                        Current value: {field.value} {field.suffix}
                       </span>
                     </span>
                   </span>
@@ -121,33 +121,33 @@ export function FugasCalculator() {
         </div>
 
         <div className="rounded-lg border border-primary bg-[#eef9f7] p-6 shadow-[0_18px_50px_rgba(15,107,122,0.12)]">
-          <p className="text-sm font-semibold text-primary">Posible fuga mensual</p>
+          <p className="text-sm font-semibold text-primary">Possible monthly revenue leak</p>
           <p className="mt-3 text-4xl font-semibold leading-tight text-foreground md:text-5xl">
             {formatEuros(estimate.min)} - {formatEuros(estimate.max)}
           </p>
           <p className="mt-4 text-sm leading-6 text-ink-soft">
-            Estimación conservadora basada en citas no aprovechadas, presupuestos sin seguimiento
-            y pacientes inactivos. La auditoría revisa el caso real antes de proponer automatizaciones.
+            Conservative estimate based on unused appointments, quotes without follow-up and
+            inactive patients. The audit reviews the real case before proposing automations.
           </p>
           <dl className="mt-6 grid gap-3 text-sm">
             <div className="flex items-center justify-between gap-3 rounded-md bg-white px-4 py-3">
-              <dt className="font-medium text-ink-soft">Citas</dt>
+              <dt className="font-medium text-ink-soft">Appointments</dt>
               <dd className="font-semibold">{formatEuros(Math.round(missedAppointments * averageTreatment * 0.35))}</dd>
             </div>
             <div className="flex items-center justify-between gap-3 rounded-md bg-white px-4 py-3">
-              <dt className="font-medium text-ink-soft">Presupuestos</dt>
+              <dt className="font-medium text-ink-soft">Quotes</dt>
               <dd className="font-semibold">{formatEuros(Math.round(openQuotes * averageTreatment * 0.18))}</dd>
             </div>
             <div className="flex items-center justify-between gap-3 rounded-md bg-white px-4 py-3">
-              <dt className="font-medium text-ink-soft">Pacientes dormidos</dt>
+              <dt className="font-medium text-ink-soft">Dormant patients</dt>
               <dd className="font-semibold">{formatEuros(Math.round(Math.min(inactivePatients, 250) * 45))}</dd>
             </div>
           </dl>
           <a
             className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-md bg-primary px-5 font-semibold text-white hover:bg-primary-strong"
-            href="#solicitar-auditoria"
+            href="#request-audit"
           >
-            Solicitar auditoría gratuita
+            Request a free audit
           </a>
         </div>
       </div>
