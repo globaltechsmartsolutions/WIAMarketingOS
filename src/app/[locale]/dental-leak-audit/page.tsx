@@ -16,7 +16,6 @@ import {
   Star,
   UsersRound,
 } from "lucide-react";
-import { LeakCalculator } from "@/app/dental-leak-audit/leak-calculator";
 import {
   dentalLandingLocaleOptions,
   getDentalLandingCopy,
@@ -151,8 +150,8 @@ export default async function LocalizedDentalLeakAuditLanding({
 
             <div className="flex flex-col gap-3 md:flex-row md:items-center">
               <nav className="hidden items-center gap-6 text-sm font-medium text-white/78 md:flex">
-                <a className="hover:text-white" href="#calculator">
-                  {copy.nav.calculator}
+                <a className="hover:text-white" href="#automations">
+                  {copy.nav.automations}
                 </a>
                 <a className="hover:text-white" href="#system">
                   {copy.nav.system}
@@ -205,7 +204,7 @@ export default async function LocalizedDentalLeakAuditLanding({
                 </a>
                 <a
                   className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-white/42 px-5 font-semibold text-white hover:bg-white/10"
-                  href="#calculator"
+                  href="#automations"
                 >
                   {copy.hero.secondaryCta}
                 </a>
@@ -256,7 +255,49 @@ export default async function LocalizedDentalLeakAuditLanding({
         </div>
       </section>
 
-      <LeakCalculator copy={copy.calculator} />
+      <section id="automations" className="border-y border-border bg-surface">
+        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+          <div>
+            <p className="text-sm font-semibold text-primary">{copy.automations.eyebrow}</p>
+            <h2 className="mt-2 text-3xl font-semibold leading-tight md:text-4xl">
+              {copy.automations.title}
+            </h2>
+            <p className="mt-4 text-base leading-7 text-ink-soft">{copy.automations.body}</p>
+            <a
+              className="mt-7 inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-white hover:bg-primary-strong"
+              href="#request-audit"
+            >
+              {copy.automations.cta}
+              <ArrowRight className={isRtl ? "rotate-180" : undefined} size={16} aria-hidden />
+            </a>
+          </div>
+
+          <div className="grid gap-4">
+            {copy.automations.items.map((item) => {
+              const visual = leakVisuals[item.key];
+              const Icon = visual.icon;
+
+              return (
+                <article key={item.title} className="rounded-lg border border-border bg-background p-5">
+                  <div className="flex gap-4">
+                    <span className={`grid size-11 shrink-0 place-items-center rounded-md ${visual.tone}`}>
+                      <Icon size={20} aria-hidden />
+                    </span>
+                    <div>
+                      <h3 className="font-semibold">{item.title}</h3>
+                      <p className="mt-2 text-sm leading-6 text-ink-soft">{item.text}</p>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+
+            <div className="rounded-lg border border-[#bcece6] bg-secondary-soft p-5 text-sm font-semibold leading-6 text-primary-strong">
+              {copy.automations.closing}
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section id="system" className="mx-auto max-w-6xl px-5 py-12">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
