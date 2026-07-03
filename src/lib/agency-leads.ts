@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { getDb } from "@/lib/db";
+import { syncAgencyAuditLeadToMarketingCrmById } from "@/lib/marketing-crm";
 
 const optionalText = (max: number) =>
   z
@@ -122,7 +123,7 @@ export async function createAgencyAuditLead(
   const phone = normalizePhone(parsed.phone);
   const db = getDb();
 
-  return db.agencyLead.create({
+  const agencyLead = await db.agencyLead.create({
     data: {
       clinicName: parsed.clinicName,
       contactName: parsed.contactName,
@@ -158,4 +159,8 @@ export async function createAgencyAuditLead(
       },
     },
   });
+
+  await syncAgencyAuditLeadToMarketingCrmById(agencyLead.id);
+
+  return agencyLead;
 }

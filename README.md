@@ -26,7 +26,10 @@ La estrategia y el roadmap están en [`docs/`](./docs/README.md):
 
 - `/` - entrada del sistema.
 - `/auditoria-fugas-dental` - landing pública de captación para clínicas dentales.
-- `/interno/ventas` - backoffice interno inicial de leads y auditorías.
+- `/interno/campanas` - CRM central de campañas.
+- `/interno/leads` - bandeja de leads, empresas, contactos, actividades y tareas.
+- `/interno/deals` - pipeline de oportunidades.
+- `/interno/ventas` - alias antiguo que redirige a `/interno/leads`.
 - `/api/agency/audits` - endpoint que recibe solicitudes de auditoría.
 
 ## Desarrollo
@@ -52,6 +55,10 @@ npm run db:studio
 - Usuario: `alejandro@globaltech.test`
 - Clave: `demo2026` o el valor de `INTERNAL_DEMO_PASSWORD`
 
+## Estado actual
+
+La Fase 1 del roadmap ya está implementada: modelos de CRM de marketing, seed/demo dental, sincronización de auditorías entrantes y pantallas internas de campañas, leads y oportunidades.
+
 ## Próximo hito
 
-El siguiente hito recomendado es la Fase 1 del roadmap: convertir el backoffice inicial en un CRM central de marketing con campañas, empresas, contactos, leads, oportunidades, actividades y tareas.
+El siguiente hito recomendado es la Fase 2 del roadmap: Campaign Builder para crear, editar, duplicar y medir campañas desde UI sin tocar código.

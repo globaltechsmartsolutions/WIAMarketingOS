@@ -62,9 +62,9 @@ export default function Home() {
             </Link>
             <Link
               className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-border bg-surface px-5 font-semibold hover:bg-muted"
-              href="/interno/ventas"
+              href="/interno/campanas"
             >
-              Abrir backoffice
+              Abrir CRM interno
             </Link>
           </div>
         </div>

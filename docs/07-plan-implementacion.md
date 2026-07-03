@@ -4,6 +4,8 @@ Este plan traduce el roadmap en trabajo concreto para las próximas iteraciones.
 
 ## Sprint 1 - Normalizar el CRM de marketing
 
+Estado: hecho.
+
 Objetivo:
 
 Pasar de `AgencyLead` a una base de datos preparada para múltiples campañas.
@@ -29,7 +31,17 @@ Resultado esperado:
 
 WIAMarketingOS deja de ser "panel de auditorías dentales" y pasa a ser CRM central de campañas.
 
+Resultado implementado:
+
+- `AgencyLead` se mantiene como compatibilidad de la landing dental.
+- Cada auditoría entrante se sincroniza con empresa, contacto, lead, oportunidad, actividad y tarea.
+- `/interno/campanas` muestra campañas, métricas y creación básica de campañas.
+- `/interno/leads` permite filtrar, priorizar, mover estado, registrar actividad y crear/completar tareas.
+- `/interno/deals` permite revisar pipeline y mover oportunidades por etapa.
+
 ## Sprint 2 - Campaign Builder
+
+Estado: siguiente.
 
 Objetivo:
 

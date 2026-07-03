@@ -38,6 +38,7 @@ model AgencyLead {
   createdAt             DateTime         @default(now())
   updatedAt             DateTime         @updatedAt
   activities            AgencyActivity[]
+  marketingLead         Lead?
 
   @@index([status, createdAt])
   @@index([priority, createdAt])
@@ -57,4 +58,191 @@ model AgencyActivity {
 
   @@index([leadId, createdAt])
   @@index([type, createdAt])
+}
+
+model Campaign {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  vertical    String
+  offer       String?
+  status      String     @default("draft")
+  goal        String?
+  landingPath String?
+  budgetCents Int?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  leads       Lead[]
+  deals       Deal[]
+  activities  Activity[]
+  tasks       Task[]
+
+  @@index([status, createdAt])
+  @@index([vertical, status])
+}
+
+model Company {
+  id         String     @id @default(cuid())
+  name       String
+  sector     String?
+  website    String?
+  city       String?
+  country    String     @default("ES")
+  sizeLabel  String?
+  source     String     @default("manual")
+  notes      String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  contacts   Contact[]
+  leads      Lead[]
+  deals      Deal[]
+  activities Activity[]
+  tasks      Task[]
+
+  @@index([name])
+  @@index([sector, city])
+  @@index([source, createdAt])
+}
+
+model Contact {
+  id               String     @id @default(cuid())
+  companyId        String?
+  name             String
+  role             String?
+  email            String?
+  phone            String?
+  source           String     @default("manual")
+  privacyConsent   Boolean    @default(false)
+  marketingConsent Boolean    @default(false)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  company          Company?   @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  leads            Lead[]
+  deals            Deal[]
+  activities       Activity[]
+  tasks            Task[]
+
+  @@index([companyId])
+  @@index([email])
+  @@index([phone])
+}
+
+model Lead {
+  id                String       @id @default(cuid())
+  campaignId        String?
+  companyId         String?
+  contactId         String?
+  agencyLeadId      String?      @unique
+  title             String
+  status            String       @default("nuevo")
+  priority          String       @default("normal")
+  source            String       @default("manual")
+  landingPage       String?
+  problem           String?
+  estimatedValueMin Int?
+  estimatedValueMax Int?
+  score             Int          @default(0)
+  nextStep          String?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  campaign          Campaign?    @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  company           Company?     @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  contact           Contact?     @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  agencyLead        AgencyLead?  @relation(fields: [agencyLeadId], references: [id], onDelete: SetNull)
+  deals             Deal[]
+  activities        Activity[]
+  tasks             Task[]
+
+  @@index([campaignId, status])
+  @@index([companyId, createdAt])
+  @@index([contactId])
+  @@index([status, createdAt])
+  @@index([priority, score])
+}
+
+model Deal {
+  id              String     @id @default(cuid())
+  campaignId      String?
+  companyId       String?
+  contactId       String?
+  leadId          String?
+  title           String
+  stage           String     @default("cualificacion")
+  status          String     @default("open")
+  valueCents      Int?
+  probability     Int        @default(20)
+  expectedCloseAt DateTime?
+  lostReason      String?
+  wonAt           DateTime?
+  lostAt          DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  campaign        Campaign?  @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  company         Company?   @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  contact         Contact?   @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  lead            Lead?      @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  activities      Activity[]
+  tasks           Task[]
+
+  @@index([campaignId, stage])
+  @@index([companyId, status])
+  @@index([leadId])
+  @@index([stage, status])
+}
+
+model Activity {
+  id         String    @id @default(cuid())
+  campaignId String?
+  companyId  String?
+  contactId  String?
+  leadId     String?
+  dealId     String?
+  type       String
+  title      String
+  notes      String?
+  outcome    String?
+  createdBy  String?
+  createdAt  DateTime  @default(now())
+  campaign   Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  company    Company?  @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  contact    Contact?  @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  lead       Lead?     @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  deal       Deal?     @relation(fields: [dealId], references: [id], onDelete: SetNull)
+
+  @@index([campaignId, createdAt])
+  @@index([companyId, createdAt])
+  @@index([contactId, createdAt])
+  @@index([leadId, createdAt])
+  @@index([dealId, createdAt])
+  @@index([type, createdAt])
+}
+
+model Task {
+  id         String    @id @default(cuid())
+  campaignId String?
+  companyId  String?
+  contactId  String?
+  leadId     String?
+  dealId     String?
+  title      String
+  notes      String?
+  status     String    @default("open")
+  priority   String    @default("normal")
+  dueAt      DateTime?
+  assignedTo String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  campaign   Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  company    Company?  @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  contact    Contact?  @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  lead       Lead?     @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  deal       Deal?     @relation(fields: [dealId], references: [id], onDelete: SetNull)
+
+  @@index([campaignId, status])
+  @@index([companyId, status])
+  @@index([contactId, status])
+  @@index([leadId, status])
+  @@index([dealId, status])
+  @@index([status, dueAt])
+  @@index([priority, dueAt])
 }

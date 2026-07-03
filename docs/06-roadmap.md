@@ -21,6 +21,8 @@ campaña separada del CRM del cliente
 
 ## Fase 1 - CRM central de marketing
 
+Estado: hecho.
+
 Objetivo:
 
 Convertir el backoffice en un CRM comercial interno real.
@@ -40,6 +42,15 @@ Definition of Done:
 - Un lead puede vincularse a campaña, empresa, contacto y oportunidad.
 - Ventas puede saber qué tocar hoy.
 - Dirección puede ver pipeline por campaña.
+
+Implementado:
+
+- Modelos Prisma `Campaign`, `Company`, `Contact`, `Lead`, `Deal`, `Activity` y `Task`.
+- Migración `20260703134500_add_marketing_crm_core`.
+- Seed/demo idempotente de campaña dental.
+- Sincronización de `AgencyLead` hacia el CRM central.
+- Navegación interna con `/interno/campanas`, `/interno/leads` y `/interno/deals`.
+- Alias `/interno/ventas` redirigido a `/interno/leads`.
 
 ## Fase 2 - Campaign Builder
 

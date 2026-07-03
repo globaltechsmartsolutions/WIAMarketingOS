@@ -47,7 +47,7 @@ export async function getCurrentAppSession(): Promise<AppSession | null> {
 
 export async function requireAppSession(
   requirement: PermissionRequirement,
-  nextPath = "/interno/ventas",
+  nextPath = "/interno/campanas",
 ): Promise<AppSession> {
   const session = await getCurrentAppSession();
 

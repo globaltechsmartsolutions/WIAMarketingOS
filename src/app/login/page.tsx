@@ -8,7 +8,7 @@ export default async function LoginPage({
   searchParams: Promise<{ error?: string; next?: string }>;
 }) {
   const query = await searchParams;
-  const nextPath = getSafeNextPath(query.next ?? "/interno/ventas");
+  const nextPath = getSafeNextPath(query.next ?? "/interno/campanas");
   const hasError = query.error === "1";
 
   return (
